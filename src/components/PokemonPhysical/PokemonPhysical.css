@@ -1,0 +1,19 @@
+.PhysicalChart {
+    background-color: #30a7d7;
+    height: 250px;
+    width: 300px;
+    padding: 10px;
+    border-radius: 10%;
+}
+
+.Left {
+    float: left;
+    width: 50%;
+}
+
+
+.Right {
+    float: left;
+    width: 50%;
+}
+

@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import PokemonType from './components/PokemonType/PokemonType';
 import PokemonPhysical from './components/PokemonPhysical/PokemonPhysical';
+import PokemonEvolution from './components/PokemonEvolution/PokemonEvolution';
+import PokemonStats from './components/PokemonStats/PokemonStats';
 
 class App extends Component {
 
@@ -96,7 +98,12 @@ class App extends Component {
   }
 
   componentWillMount(){
-    axios.get('https://pokeapi.co/api/v2/pokemon/1/')
+
+    if (this.state.pokemonId === null){
+      this.state.pokemonId = 1; 
+    }
+
+    axios.get('https://pokeapi.co/api/v2/pokemon/' + this.state.pokemonId + '/')
       .then(res => {
         let pokemonName = this.upperCaseFirst(res.data.name);
         let pokemonId = res.data.id;
@@ -129,6 +136,7 @@ class App extends Component {
                                                         weight={this.state.pokemonWeight}
                                                         abilities={this.state.pokemonAbilities}
                                                         /> : null;
+    let pokemonEvolutions = this.state.pokemonId ? <PokemonEvolution pokemonId={this.state.pokemonId}/> : null;
     
 
     return (
@@ -147,6 +155,9 @@ class App extends Component {
             {pokemonTypes}
         </ul>
         {pokemonPhysical}
+        {pokemonEvolutions}
+        <PokemonStats />
+        
       </div>
     );
   }

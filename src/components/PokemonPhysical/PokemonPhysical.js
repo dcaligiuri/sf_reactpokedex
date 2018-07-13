@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import classes from './PokemonPhysical.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faVenus, faMars } from '@fortawesome/free-solid-svg-icons';
+
 
 class PokemonPhysical extends Component{
 
@@ -13,14 +16,21 @@ class PokemonPhysical extends Component{
         (<p key={el.ability.name}>{this.upperCaseFirst(el.ability.name)}</p>)) : null;
     
         return (
-            <div>
-                <p>Height</p>
-                <p>{this.props.height + " m"}</p>
-                <p>Weight</p>
-                <p>{this.props.weight + " kg"}</p>
-                <p>Abilities</p>
-                {abilities}
-        </div>
+            <div className={classes.PhysicalChart}>
+                <div className={classes.Left}>
+                    <p style={{color:'white'}}>Height</p>
+                    <p>{this.props.height + " m"}</p>
+                    <p style={{color:'white'}}>Weight</p>
+                    <p>{this.props.weight + " kg"}</p>
+                    <p style={{color:'white'}}>Gender</p>
+                    <FontAwesomeIcon icon={faMars} />
+                    <FontAwesomeIcon icon={faVenus} />
+                </div>
+                <div className={classes.Right}>
+                    <p style={{color:'white'}}>Abilities</p>
+                    {abilities}
+                </div>
+            </div>
         );
             
     }

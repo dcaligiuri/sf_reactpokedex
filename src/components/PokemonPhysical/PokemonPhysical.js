@@ -14,24 +14,30 @@ class PokemonPhysical extends Component{
 
         let abilities = this.props.abilities ? this.props.abilities.map((el) => 
         (<p key={el.ability.name}>{this.upperCaseFirst(el.ability.name)}</p>)) : null;
+
+        if (abilities){
+            return (
+                <div className={classes.PhysicalChart}>
+                    <div className={classes.Left}>
+                        <p style={{color:'white'}}>Height</p>
+                        <p>{this.props.height + " m"}</p>
+                        <p style={{color:'white'}}>Weight</p>
+                        <p>{this.props.weight + " kg"}</p>
+                        <p style={{color:'white'}}>Gender</p>
+                        <FontAwesomeIcon icon={faMars} />
+                        <FontAwesomeIcon icon={faVenus} />
+                    </div>
+                    <div className={classes.Right}>
+                        <p style={{color:'white'}}>Abilities</p>
+                        {abilities}
+                    </div>
+                </div>
+            );
+        }
+        else 
+            return null;
     
-        return (
-            <div className={classes.PhysicalChart}>
-                <div className={classes.Left}>
-                    <p style={{color:'white'}}>Height</p>
-                    <p>{this.props.height + " m"}</p>
-                    <p style={{color:'white'}}>Weight</p>
-                    <p>{this.props.weight + " kg"}</p>
-                    <p style={{color:'white'}}>Gender</p>
-                    <FontAwesomeIcon icon={faMars} />
-                    <FontAwesomeIcon icon={faVenus} />
-                </div>
-                <div className={classes.Right}>
-                    <p style={{color:'white'}}>Abilities</p>
-                    {abilities}
-                </div>
-            </div>
-        );
+        
             
     }
 }

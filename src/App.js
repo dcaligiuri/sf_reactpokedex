@@ -5,12 +5,14 @@ import PokemonType from './components/PokemonType/PokemonType';
 import PokemonPhysical from './components/PokemonPhysical/PokemonPhysical';
 import PokemonEvolution from './components/PokemonEvolution/PokemonEvolution';
 import PokemonStats from './components/PokemonStats/PokemonStats';
+import PokedexDescription from './containers/PokedexDescription/PokedexDescription';
+import PokemonGenders from './components/PokemonGenders/PokemonGenders';
 
 class App extends Component {
 
   state  = {
     pokemonName: null,
-    pokemonId: null,
+    pokemonId: 1,
     pokemonPaddedId: null,
     pokemonTypes: null,
     pokemonWeaknesses: null,
@@ -40,10 +42,9 @@ class App extends Component {
     }
     axios.get('https://pokeapi.co/api/v2/pokemon/' + nextPokemonId + '/')
       .then(res => {
-        let pokemonName = this.upperCaseFirst(res.data.name);
         let pokemonId = res.data.id;
         let pokemonPaddedId = this.pokemonNumtoThreeDigits(pokemonId);
-        this.setState({pokemonName: pokemonName});
+        this.setState({pokemonName: res.data.name});
         this.setState({pokemonId: pokemonId});
         this.setState({pokemonPaddedId: pokemonPaddedId});
         this.setState({pokemonTypes: res.data.types});
@@ -83,10 +84,9 @@ class App extends Component {
     }
     axios.get('https://pokeapi.co/api/v2/pokemon/' + prevPokemonId + '/')
       .then(res => {
-        let pokemonName = this.upperCaseFirst(res.data.name);
         let pokemonId = res.data.id;
         let pokemonPaddedId = this.pokemonNumtoThreeDigits(pokemonId);
-        this.setState({pokemonName: pokemonName});
+        this.setState({pokemonName: res.data.name});
         this.setState({pokemonId: pokemonId});
         this.setState({pokemonPaddedId: pokemonPaddedId});
         this.setState({pokemonTypes: res.data.types});
@@ -99,16 +99,12 @@ class App extends Component {
 
   componentWillMount(){
 
-    if (this.state.pokemonId === null){
-      this.state.pokemonId = 1; 
-    }
 
     axios.get('https://pokeapi.co/api/v2/pokemon/' + this.state.pokemonId + '/')
       .then(res => {
-        let pokemonName = this.upperCaseFirst(res.data.name);
         let pokemonId = res.data.id;
         let pokemonPaddedId = this.pokemonNumtoThreeDigits(pokemonId);
-        this.setState({pokemonName: pokemonName});
+        this.setState({pokemonName: res.data.name});
         this.setState({pokemonId: pokemonId});
         this.setState({pokemonPaddedId: pokemonPaddedId});
         this.setState({pokemonTypes: res.data.types});
@@ -124,20 +120,12 @@ class App extends Component {
 
     let pokemonProPic = this.state.pokemonPaddedId ? <img 
                           src={"https://assets.pokemon.com/assets/cms2/img/pokedex/full/" + this.state.pokemonPaddedId + ".png"} 
-                          alt="Bulbasaur" /> : null;
+                          alt={this.upperCaseFirst(this.state.pokemonName)} /> : null;
                           
-    let pokemonName = this.state.pokemonName ? <h1>{this.state.pokemonName + " #" + this.state.pokemonPaddedId }</h1> : null;
+    let pokemonName = this.state.pokemonName ? <h1>{this.upperCaseFirst(this.state.pokemonName) + " #" + this.state.pokemonPaddedId }</h1> : null;
 
     let pokemonTypes = this.state.pokemonTypes ? this.state.pokemonTypes.map((item) => 
           (<PokemonType type={item.type.name} key={item.type.name}>{item.type.name}</PokemonType>)) : null;
-
-    let pokemonPhysical = this.state.pokemonHeight ? <PokemonPhysical 
-                                                        height={this.state.pokemonHeight} 
-                                                        weight={this.state.pokemonWeight}
-                                                        abilities={this.state.pokemonAbilities}
-                                                        /> : null;
-    let pokemonEvolutions = this.state.pokemonId ? <PokemonEvolution pokemonId={this.state.pokemonId}/> : null;
-    
 
     return (
       <div className="App">
@@ -150,13 +138,18 @@ class App extends Component {
           <button onClick={() => this.nextPokemonHandler(this.state.pokemonId)}>Next Pokemon</button>
         </div>
         {pokemonProPic}
-        <h1>Types</h1>
-        <ul> 
-            {pokemonTypes}
-        </ul>
-        {pokemonPhysical}
-        {pokemonEvolutions}
+        <div>
+          <h1>Types</h1>
+          {pokemonTypes}
+        </div>
+        <PokemonPhysical 
+          height={this.state.pokemonHeight} 
+          weight={this.state.pokemonWeight}
+          abilities={this.state.pokemonAbilities}/>
+        <PokemonEvolution pokemonId={this.state.pokemonId}/>
         <PokemonStats />
+        <PokedexDescription pokemonId={this.state.pokemonId}/> 
+        <PokemonGenders pokemonName={this.state.pokemonName}/>
         
       </div>
     );

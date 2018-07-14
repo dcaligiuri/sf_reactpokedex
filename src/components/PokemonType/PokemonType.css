@@ -1,9 +1,13 @@
 
 .PokemonType {
     height: 50px;
-    width: 100px;
+    width: 150px;
+    border-radius: 5%;
     color: white;
-    text-align: center;
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: center; /* align vertical */
+    float: left; 
 }
 
 .Fire {
@@ -12,108 +16,76 @@
 
 .Grass {
     background-color: #9bcc50;
-    height: 50px;
-    width: 100px;
 }
 
 .Poison {
     background-color: #b97fc9;
-    height: 50px;
-    width: 100px;
 }
 
 .Bug {
     background-color: #9bcc50;
-    height: 50px;
-    width: 100px;
 }
 
 .Water {
     background-color: #4592c4;
-    height: 50px;
-    width: 100px;
 }
 
 
 .Normal {
     background-color: #a4acaf;
-    height: 50px;
-    width: 100px;
 }
 
 
 .Electric {
     background-color: #eed535;
-    height: 50px;
-    width: 100px;
 }
 
 
 .Ground {
     background-color: #E0C068;
-    height: 50px;
-    width: 100px;
 }
 
 
 .Fairy {
     background-color: #fdb9e9;
-    height: 50px;
-    width: 100px;
 }
 
 .Fighting {
     background-color: #d56723;
-    height: 50px;
-    width: 100px;
 }
 
 .Psychic {
     background-color: #f366b9;
-    height: 50px;
-    width: 100px;
+
 }
 
 .Rock {
     background-color: #a38c21;
-    height: 50px;
-    width: 100px;
 }
 
 .Steel {
     background-color: #9eb7b8;
-    height: 50px;
-    width: 100px;
 }
 
 .Ice {
     background-color: #51c4e7;
-    height: 50px;
-    width: 100px;
 }
 
 .Ghost {
     background-color: #7b62a3;
-    height: 50px;
-    width: 100px;
 }
 
 .Dragon {
     background-color: #5a3696;
-    height: 50px;
-    width: 100px;
 }
 
 .Dark {
     background-color: #707070;
-    height: 50px;
-    width: 100px;
 }
 
 .Flying {
     background-color: #A890F0;
-    height: 50px;
-    width: 100px;
+
 }
 
 

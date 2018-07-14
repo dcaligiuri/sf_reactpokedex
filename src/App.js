@@ -7,6 +7,7 @@ import PokemonEvolution from './components/PokemonEvolution/PokemonEvolution';
 import PokemonStats from './components/PokemonStats/PokemonStats';
 import PokedexDescription from './containers/PokedexDescription/PokedexDescription';
 import PokemonGenders from './components/PokemonGenders/PokemonGenders';
+import TypeContainer from './containers/TypeContainer/TypeContainer';
 
 class App extends Component {
 
@@ -18,7 +19,8 @@ class App extends Component {
     pokemonWeaknesses: null,
     pokemonHeight: null,
     pokemonWeight: null,
-    pokemonAbilities: null
+    pokemonAbilities: null,
+    pokemonStats: null
   };
 
   upperCaseFirst(string) {
@@ -51,6 +53,7 @@ class App extends Component {
         this.setState({pokemonHeight: (res.data.height / 10.0)});
         this.setState({pokemonWeight: (res.data.weight / 10.0)});
         this.setState({pokemonAbilities: res.data.abilities});
+        this.setState({pokemonStats: res.data.stats});
         console.log(res.data);
       })
       .catch(error => console.log(error))
@@ -93,6 +96,7 @@ class App extends Component {
         this.setState({pokemonHeight: (res.data.height / 10.0)});
         this.setState({pokemonWeight: (res.data.weight / 10.0)});
         this.setState({pokemonAbilities: res.data.abilities});
+        this.setState({pokemonStats: res.data.stats});
       })
       .catch(error => console.log(error));
   }
@@ -111,6 +115,7 @@ class App extends Component {
         this.setState({pokemonHeight: (res.data.height / 10.0)});
         this.setState({pokemonWeight: (res.data.weight / 10.0)});
         this.setState({pokemonAbilities: res.data.abilities});
+        this.setState({pokemonStats: res.data.stats});
       })
       .catch(error => console.log(error));
   }
@@ -124,13 +129,10 @@ class App extends Component {
                           
     let pokemonName = this.state.pokemonName ? <h1>{this.upperCaseFirst(this.state.pokemonName) + " #" + this.state.pokemonPaddedId }</h1> : null;
 
-    let pokemonTypes = this.state.pokemonTypes ? this.state.pokemonTypes.map((item) => 
-          (<PokemonType type={item.type.name} key={item.type.name}>{item.type.name}</PokemonType>)) : null;
-
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">React Pokedex</h1>
         </header>
         <div>
           <button onClick={() => this.prevPokemonHandler(this.state.pokemonId)}>Previous Pokemon</button>
@@ -138,16 +140,13 @@ class App extends Component {
           <button onClick={() => this.nextPokemonHandler(this.state.pokemonId)}>Next Pokemon</button>
         </div>
         {pokemonProPic}
-        <div>
-          <h1>Types</h1>
-          {pokemonTypes}
-        </div>
+        <TypeContainer pokemonTypes={this.state.pokemonTypes}/>
         <PokemonPhysical 
           height={this.state.pokemonHeight} 
           weight={this.state.pokemonWeight}
           abilities={this.state.pokemonAbilities}/>
         <PokemonEvolution pokemonId={this.state.pokemonId}/>
-        <PokemonStats />
+        <PokemonStats pokemonStats={this.state.pokemonStats}/>
         <PokedexDescription pokemonId={this.state.pokemonId}/> 
         <PokemonGenders pokemonName={this.state.pokemonName}/>
         

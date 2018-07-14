@@ -7,7 +7,7 @@ class PokemonEvolution extends Component{
     componentDidMount(){
         axios.get('https://pokeapi.co/api/v2/evolution-chain/' + this.props.pokemonId + '/')
           .then(res => {
-            console.log(res.data.chain.evolves_to[0].species.name);
+            console.log(res.data.chain.evolves_to);
             //this.setState({pokemonName: pokemonName});
           })
           .catch(error => console.log(error));

@@ -1,15 +1,9 @@
-import React, {Component} from 'react';
-//import classes from './PokemonStats.css';
-import {Bar} from 'react-chartjs-2';
-
-class PokemonStats extends Component{
-
-    state = {
+state = {
         chartData: {
             labels: ['Boston', 'Worchester', 'Springfield', 'Lowell'],
             datasets: [
                 {
-                    label: 'Stats',
+                    label: 'Population',
                     data: [
                         617594,
                         181045,
@@ -27,15 +21,38 @@ class PokemonStats extends Component{
         }
     }
 
-    componentWillMount(){
 
-    }
-    
-    render(){
+
+
+
+
+
+
+     if (this.props.pokemonStats){
+            const statNames = this.props.pokemonStats.map(el => el.stat.name );
+            const statBases = this.props.pokemonStats.map(el => el.stat.base_stat);
+            const chartData = {
+                labels: statNames,
+                datasets: [
+                    {
+                        label: 'Population',
+                        data: statBases,
+                        backgroundColor: [
+                            'rgba(255,99,132,0.6)',
+                            'rgba(54,162,235,0.6)',
+                            'rgba(255,206,86,0.6)',
+                            'rgba(75,192,192,0.6)',
+                        ]
+                    }
+                ]
+            }
+        }
+        
         return (
             <div className="chart">
                 <Bar 
-                    data={this.state.chartData}
+                    data={chartData ? chartData : null}
+                    type={'horizontalBar'}
                     options={{
                         title: {
                             display: true,
@@ -43,7 +60,8 @@ class PokemonStats extends Component{
                             fontSize: '12'
                         },
                         legend: {
-                            display: false
+                            display: true,
+                            position: 'right'
                         }
                     }
                    
@@ -53,9 +71,3 @@ class PokemonStats extends Component{
             
             </div>
         )
-            
-            
-    }
-}
-
-export default PokemonStats;

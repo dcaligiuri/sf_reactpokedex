@@ -10,9 +10,9 @@ class PokeBallIcon extends Component{
            <div>
               <svg xmlns="http://www.w3.org/2000/svg"
      width="1in" height="1in"
-     viewBox="0 0 1024 1024">
-  <path id="pkmn-go-teamless"
-        fill={this.props.fill} stroke="none" stroke-width="1"
+     viewBox="0 0 1024 1024" >
+  <path 
+        fill={this.props.fill} stroke="none"
         d="M 512.00,96.80
            C 304.28,96.94 132.17,249.33 101.24,448.41
              101.24,448.41 312.51,448.80 312.51,448.80

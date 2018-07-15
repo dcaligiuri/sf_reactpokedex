@@ -1,6 +1,7 @@
-.PokemonDes {
+.PokemonProPic {
+    width: 80%;
     display: block; 
     margin-left: auto;
     margin-right: auto;
-    width: 80%;
+    background-color: #f2f2f2;
 }

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-//import classes from './PokemonDescription.css';
 import axios from 'axios';
+import classes from './PokemonDescription.css';
 
 class PokemonDescription extends Component{
 
@@ -22,6 +22,7 @@ class PokemonDescription extends Component{
     componentWillMount(){
         axios.get('https://pokeapi.co/api/v2/pokemon-species/' + this.props.pokemonId + '/')
             .then(res => {
+                //console.log(res.data.flavor_text_entries);
                 this.setState({description: res.data.flavor_text_entries[1].flavor_text});
             })
             .catch(error => console.log(error));
@@ -29,8 +30,8 @@ class PokemonDescription extends Component{
 
     render(){
         return (
-           <div>
-              {this.state.description}
+           <div className={classes.PokemonDes}>
+              <p>{this.state.description}</p>
               {this.props.activeVersion}
            </div>
         );

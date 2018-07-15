@@ -12,11 +12,6 @@ class TypeContainer extends Component{
             <div>
                 <h1>Types</h1>
                 {pokemonTypes}
-                
-                <br />
-                <br />
-                <br />
-                <br />
             </div>
         )
     }

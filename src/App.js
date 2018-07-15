@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-//import classes from './App.css';
+import classes from './App.css';
 import axios from 'axios';
-import PokemonType from './components/PokemonType/PokemonType';
 import PokemonPhysical from './components/PokemonPhysical/PokemonPhysical';
 import PokemonEvolution from './components/PokemonEvolution/PokemonEvolution';
 import PokemonStats from './components/PokemonStats/PokemonStats';
 import PokedexDescription from './containers/PokedexDescription/PokedexDescription';
 import PokemonGenders from './components/PokemonGenders/PokemonGenders';
 import TypeContainer from './containers/TypeContainer/TypeContainer';
+import PokemonProPic from './components/PokemonProPic/PokemonProPic';
 
 class App extends Component {
 
@@ -25,6 +25,20 @@ class App extends Component {
 
   upperCaseFirst(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  getPrevId(currPokeId){
+    if (currPokeId === 1)
+      return "#" + this.pokemonNumtoThreeDigits("802");
+    else 
+      return "#" + this.pokemonNumtoThreeDigits(--currPokeId);
+  }
+
+  getNextId(currPokeId) {
+    if (currPokeId === 802)
+      return "#" + this.pokemonNumtoThreeDigits("1");
+    else
+      return "#" + this.pokemonNumtoThreeDigits(++currPokeId); 
   }
 
   pokemonNumtoThreeDigits(strNum){
@@ -54,7 +68,6 @@ class App extends Component {
         this.setState({pokemonWeight: (res.data.weight / 10.0)});
         this.setState({pokemonAbilities: res.data.abilities});
         this.setState({pokemonStats: res.data.stats});
-        console.log(res.data);
       })
       .catch(error => console.log(error))
       /*.then(res => {
@@ -121,34 +134,29 @@ class App extends Component {
   }
 
 
-  render() {
+  render() {     
+    let pokemonName = this.state.pokemonName ? <h2 style={{textAlign: 'center'}}>{this.upperCaseFirst(this.state.pokemonName) + " #" + this.state.pokemonPaddedId }</h2> : null;
 
-    let pokemonProPic = this.state.pokemonPaddedId ? <img 
-                          src={"https://assets.pokemon.com/assets/cms2/img/pokedex/full/" + this.state.pokemonPaddedId + ".png"} 
-                          alt={this.upperCaseFirst(this.state.pokemonName)} /> : null;
-                          
-    let pokemonName = this.state.pokemonName ? <h1>{this.upperCaseFirst(this.state.pokemonName) + " #" + this.state.pokemonPaddedId }</h1> : null;
+    let pokemonStats = this.state.pokemonStats ? <PokemonStats pokemonName={this.upperCaseFirst(this.state.pokemonName)} pokemonId={this.state.pokemonId} pokemonStats={this.state.pokemonStats}/> : null;
 
     return (
       <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">React Pokedex</h1>
-        </header>
-        <div>
-          <button onClick={() => this.prevPokemonHandler(this.state.pokemonId)}>Previous Pokemon</button>
+        <header className="App-Header">
+          <button onClick={() => this.prevPokemonHandler(this.state.pokemonId)}>{this.getPrevId(this.state.pokemonId)}</button>
+          <button onClick={() => this.nextPokemonHandler(this.state.pokemonId)}>{this.getNextId(this.state.pokemonId)}</button>
           {pokemonName}
-          <button onClick={() => this.nextPokemonHandler(this.state.pokemonId)}>Next Pokemon</button>
-        </div>
-        {pokemonProPic}
+        </header>
+        
+        <PokemonProPic pokemonPaddedId={this.state.pokemonPaddedId} pokemonName={this.state.pokemonName}/>
+        {pokemonStats}
+        <PokedexDescription pokemonId={this.state.pokemonId}/> 
         <TypeContainer pokemonTypes={this.state.pokemonTypes}/>
         <PokemonPhysical 
           height={this.state.pokemonHeight} 
           weight={this.state.pokemonWeight}
           abilities={this.state.pokemonAbilities}/>
-        <PokemonEvolution pokemonId={this.state.pokemonId}/>
-        <PokemonStats pokemonStats={this.state.pokemonStats}/>
-        <PokedexDescription pokemonId={this.state.pokemonId}/> 
         <PokemonGenders pokemonName={this.state.pokemonName}/>
+        <PokemonEvolution pokemonId={this.state.pokemonId}/>
         
       </div>
     );

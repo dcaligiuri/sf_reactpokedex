@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PokemonType from '../../components/PokemonType/PokemonType';
+import classes from './TypeContainer.css';
 
 class TypeContainer extends Component{
 
@@ -9,8 +10,8 @@ class TypeContainer extends Component{
         (<PokemonType type={item.type.name} key={item.type.name}>{item.type.name}</PokemonType>)) : null;
 
         return (
-            <div>
-                <h1>Types</h1>
+            <div className={classes.TypeContainer}>
+                <h4>Type</h4>
                 {pokemonTypes}
             </div>
         )

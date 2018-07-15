@@ -52,7 +52,7 @@ class PokemonEvolution extends Component{
  
     render(){
         let evolChain = this.state.evolChain ? this.state.evolChain.map((el) => 
-        (<p key={el}>{el}</p>)) : null;
+        (<span key={el}>{el}</span>)) : null;
 
         return (
            <div className={classes.Background}>

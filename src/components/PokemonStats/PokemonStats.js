@@ -68,7 +68,7 @@ class PokemonStats extends Component{
                     options={{
                         title: {
                             display: true,
-                            text: this.props.pokemonName + "\'s Stats",
+                            text: this.props.pokemonName + "'s Stats",
                             fontSize: '12'
                         },
                         legend: {

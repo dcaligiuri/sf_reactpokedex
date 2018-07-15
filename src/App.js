@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import classes from './App.css';
 import axios from 'axios';
 import PokemonPhysical from './components/PokemonPhysical/PokemonPhysical';
 import PokemonEvolution from './components/PokemonEvolution/PokemonEvolution';
@@ -150,13 +149,17 @@ class App extends Component {
         <PokemonProPic pokemonPaddedId={this.state.pokemonPaddedId} pokemonName={this.state.pokemonName}/>
         {pokemonStats}
         <PokedexDescription pokemonId={this.state.pokemonId}/> 
-        <TypeContainer pokemonTypes={this.state.pokemonTypes}/>
         <PokemonPhysical 
           height={this.state.pokemonHeight} 
           weight={this.state.pokemonWeight}
           abilities={this.state.pokemonAbilities}/>
-        <PokemonGenders pokemonName={this.state.pokemonName}/>
+        <TypeContainer pokemonTypes={this.state.pokemonTypes}/>
         <PokemonEvolution pokemonId={this.state.pokemonId}/>
+        {/*}
+       
+        <PokemonGenders pokemonName={this.state.pokemonName}/>
+        
+    {*/}
         
       </div>
     );

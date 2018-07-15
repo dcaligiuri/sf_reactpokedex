@@ -1,9 +1,14 @@
 .PhysicalChart {
     background-color: #30a7d7;
     height: 250px;
-    width: 300px;
+    width: 80%;
     padding: 10px;
     border-radius: 10%;
+    display: block; 
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    
 }
 
 .Left {
@@ -16,4 +21,6 @@
     float: left;
     width: 50%;
 }
+
+
 

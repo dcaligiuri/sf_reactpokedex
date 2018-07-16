@@ -7,6 +7,7 @@ import PokedexDescription from './containers/PokedexDescription/PokedexDescripti
 import PokemonGenders from './components/PokemonGenders/PokemonGenders';
 import TypeContainer from './containers/TypeContainer/TypeContainer';
 import PokemonProPic from './components/PokemonProPic/PokemonProPic';
+import LoadScreen from './components/UI/LoadScreen/LoadScreen';
 
 class App extends Component {
 
@@ -19,12 +20,9 @@ class App extends Component {
     pokemonHeight: null,
     pokemonWeight: null,
     pokemonAbilities: null,
-    pokemonStats: null
+    pokemonStats: null,
+    loading: true
   };
-
-  upperCaseFirst(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
 
   getPrevId(currPokeId){
     if (currPokeId === 1)
@@ -40,6 +38,10 @@ class App extends Component {
       return "#" + this.pokemonNumtoThreeDigits(++currPokeId); 
   }
 
+  upperCaseFirst(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   pokemonNumtoThreeDigits(strNum){
     let num = Number(strNum);
     let newStr = "" + num;
@@ -50,6 +52,7 @@ class App extends Component {
 
 
   nextPokemonHandler = (pokemonId) => {
+    this.setState({loading: true});
     let nextPokemonId = pokemonId + 1;
     //next for Blacephalon is Bulbasaur
     if (pokemonId === 802){
@@ -67,6 +70,7 @@ class App extends Component {
         this.setState({pokemonWeight: (res.data.weight / 10.0)});
         this.setState({pokemonAbilities: res.data.abilities});
         this.setState({pokemonStats: res.data.stats});
+        this.setState({loading: false});
       })
       .catch(error => console.log(error))
       /*.then(res => {
@@ -92,6 +96,7 @@ class App extends Component {
 
 
   prevPokemonHandler = (pokemonId) => {
+    this.setState({loading: true});
     let prevPokemonId = pokemonId - 1;
     //previous for Bulbasaur is Blacephalon
     if (pokemonId === 1){
@@ -109,6 +114,7 @@ class App extends Component {
         this.setState({pokemonWeight: (res.data.weight / 10.0)});
         this.setState({pokemonAbilities: res.data.abilities});
         this.setState({pokemonStats: res.data.stats});
+        this.setState({loading: false});
       })
       .catch(error => console.log(error));
   }
@@ -128,6 +134,7 @@ class App extends Component {
         this.setState({pokemonWeight: (res.data.weight / 10.0)});
         this.setState({pokemonAbilities: res.data.abilities});
         this.setState({pokemonStats: res.data.stats});
+        this.setState({loading: false});
       })
       .catch(error => console.log(error));
   }
@@ -143,17 +150,23 @@ class App extends Component {
         <header className="App-Header">
           <button onClick={() => this.prevPokemonHandler(this.state.pokemonId)}>{this.getPrevId(this.state.pokemonId)}</button>
           <button onClick={() => this.nextPokemonHandler(this.state.pokemonId)}>{this.getNextId(this.state.pokemonId)}</button>
+
+          {/*}
+          <Button type="prev" pokemonId={this.state.pokemonId}/>
+          <Button type="next" pokemonId={this.state.pokemonId}/>
+          {*/}
+
           {pokemonName}
         </header>
         
-        <PokemonProPic pokemonPaddedId={this.state.pokemonPaddedId} pokemonName={this.state.pokemonName}/>
+        <PokemonProPic loading={this.state.loading} pokemonPaddedId={this.state.pokemonPaddedId} pokemonName={this.state.pokemonName}/>
         {pokemonStats}
         <PokedexDescription pokemonId={this.state.pokemonId}/> 
         <PokemonPhysical 
           height={this.state.pokemonHeight} 
           weight={this.state.pokemonWeight}
           abilities={this.state.pokemonAbilities}/>
-        <TypeContainer pokemonTypes={this.state.pokemonTypes}/>
+        <TypeContainer loading={this.state.loading} pokemonTypes={this.state.pokemonTypes}/>
         <PokemonEvolution pokemonId={this.state.pokemonId}/>
         {/*}
        

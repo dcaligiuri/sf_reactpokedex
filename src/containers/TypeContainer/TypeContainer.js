@@ -11,7 +11,7 @@ class TypeContainer extends Component{
 
         return (
             <div className={classes.TypeContainer}>
-                <h4>Type</h4>
+                {this.props.loading ? null : <h4>Type</h4>}
                 {pokemonTypes}
             </div>
         )

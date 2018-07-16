@@ -27,7 +27,6 @@ class PokemonEvolution extends Component{
               axios.get(res.data.evolution_chain.url)
                   .then(evolRes => {
                       let evolArr = this.modifyEvolChain(evolRes.data);
-                      console.log(evolArr);
                       this.setState({evolChain: evolArr});
                   })
                   .catch(error => console.log(error))

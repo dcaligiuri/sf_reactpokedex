@@ -13,7 +13,9 @@ class PokemonDescription extends Component{
             axios.get('https://pokeapi.co/api/v2/pokemon-species/' + nextProps.pokemonId + '/')
                 .then(res => {
                     //later add des switch from saph + ruby
-                    this.setState({description: res.data.flavor_text_entries[1].flavor_text});
+                    let onlyEnglishDes = res.data.flavor_text_entries.filter(des => des.language.name === 'en');
+                    let randomEngDes = onlyEnglishDes[Math.floor(Math.random() * onlyEnglishDes.length)];
+                    this.setState({description: randomEngDes.flavor_text});
                 })
                 .catch(error => console.log(error));
         }
@@ -22,8 +24,9 @@ class PokemonDescription extends Component{
     componentWillMount(){
         axios.get('https://pokeapi.co/api/v2/pokemon-species/' + this.props.pokemonId + '/')
             .then(res => {
-                //console.log(res.data.flavor_text_entries);
-                this.setState({description: res.data.flavor_text_entries[1].flavor_text});
+                let onlyEnglishDes = res.data.flavor_text_entries.filter(des => des.language.name === 'en');
+                let randomEngDes = onlyEnglishDes[Math.floor(Math.random() * onlyEnglishDes.length)];
+                this.setState({description: randomEngDes.flavor_text});
             })
             .catch(error => console.log(error));
     }

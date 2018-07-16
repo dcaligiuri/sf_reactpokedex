@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import classes from './PokemonProPic.css'
+import classes from './PokemonProPic.css';
+import LoadScreen from '../UI/LoadScreen/LoadScreen';
 
 class PokemonProPic extends Component{
 
@@ -9,9 +10,10 @@ class PokemonProPic extends Component{
 
     render(){
         
-        let pokemonProPic = this.props.pokemonPaddedId ? <img className={classes.PokemonProPic}
-                        src={"https://assets.pokemon.com/assets/cms2/img/pokedex/full/" + this.props.pokemonPaddedId + ".png"} 
-                        alt={this.upperCaseFirst(this.props.pokemonName)} /> : null;
+        let pokemonProPic = this.props.loading ? <LoadScreen /> : <img className={classes.PokemonProPic}
+        src={"https://assets.pokemon.com/assets/cms2/img/pokedex/full/" + this.props.pokemonPaddedId + ".png"} 
+        alt={this.upperCaseFirst(this.props.pokemonName)} />;
+        
 
         return (
             <div>

@@ -1,0 +1,23 @@
+.Btn {
+    width: 50%;
+    height: 50px;
+    background-color: darkgray;
+    align-items: center; /* align vertical */
+    outline:none;
+}
+
+.Chevron {
+    color: white;
+}
+
+
+.BtnLeft {
+    float: right;
+    color: white;
+}
+
+
+.BtnRight {
+    float: left;
+    color: white;
+}

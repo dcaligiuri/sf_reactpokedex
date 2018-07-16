@@ -15,8 +15,8 @@ class PokemonVersion extends Component{
         return (
            <div style={{float: 'left'}}>
               Versions:
-              <a onClick={() => this.VersionChangeHandler("ruby")} ><PokeBallIcon fill='#dd2d51'/></a>
-              <a onClick={() => this.VersionChangeHandler("saph")} ><PokeBallIcon fill='#0072b0'/></a>
+              <a onClick={() => this.VersionChangeHandler("omega-ruby")} ><PokeBallIcon fill='#dd2d51'/></a>
+              <a onClick={() => this.VersionChangeHandler("alpha-sapphire")} ><PokeBallIcon fill='#0072b0'/></a>
            </div>
         );
     }

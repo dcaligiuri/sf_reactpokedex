@@ -8,16 +8,36 @@ class PokemonEvolution extends Component{
         evolChain: null
     }
 
+    getIdFromSpeciesUrl(str){
+        var items = str.split("/");
+        return items[items.length - 2 ];
+    }
+
     modifyEvolChain(obj){
-        let evolArray = [];
-        evolArray.push(obj.chain.species.name);
+        //FURTHER ADDITIONS -> HANDLE EEVEE + HITMON STYLE MULTI EVOLUTIONS
+
+        let evolObj = {};
+        //push orig pokemon to array.
+        let evolId = this.getIdFromSpeciesUrl(obj.chain.species.url);
+        evolObj[evolId] = obj.chain.species.name;
+
+        //if you evolve, push next pokemon to array.
         if (obj.chain.evolves_to.length > 0){
-            evolArray.push(obj.chain.evolves_to[0].species.name);
+            let evolId2 = this.getIdFromSpeciesUrl(obj.chain.evolves_to[0].species.url);
+            evolObj[evolId2] = obj.chain.evolves_to[0].species.name;
         }
+        //if you never evolve, return array with orig pokemon
+        else{
+            return evolObj;
+        }
+        
+        //add third evoled form
         if (obj.chain.evolves_to[0].evolves_to.length > 0){
-            evolArray.push(obj.chain.evolves_to[0].evolves_to[0].species.name);
+            let evolId3 = this.getIdFromSpeciesUrl(obj.chain.evolves_to[0].evolves_to[0].species.url);
+            evolObj[evolId3] = obj.chain.evolves_to[0].evolves_to[0].species.name;
         }
-        return evolArray;
+        console.log(evolObj);
+        return evolObj;
     }
 
     componentWillReceiveProps(nextProps){
@@ -26,8 +46,8 @@ class PokemonEvolution extends Component{
             .then(res => {
               axios.get(res.data.evolution_chain.url)
                   .then(evolRes => {
-                      let evolArr = this.modifyEvolChain(evolRes.data);
-                      this.setState({evolChain: evolArr});
+                    let evolObj = this.modifyEvolChain(evolRes.data);
+                    this.setState({evolChain: evolObj});
                   })
                   .catch(error => console.log(error))
             })
@@ -35,14 +55,31 @@ class PokemonEvolution extends Component{
         }
     }
 
+
+    /*
+    for (let evoledPokemonName of evolArr){
+                        //current img is cached
+                        if (this.props.pokemonName !== evoledPokemonName){
+                            axios.get('https://pokeapi.co/api/v2/pokemon/' + evoledPokemonName + '/')
+                                .then(getSpriteRes => {
+                                    console.log(getSpriteRes.data.sprites.front_default);
+                                })
+                                .catch(error => console.log(error))
+                        }
+                        
+                    }
+                    */
+
+
+    
+
     componentDidMount(){
         axios.get('https://pokeapi.co/api/v2/pokemon-species/' + this.props.pokemonId + '/')
           .then(res => {
             axios.get(res.data.evolution_chain.url)
                 .then(evolRes => {
-                    let evolArr = this.modifyEvolChain(evolRes.data);
-                    console.log(evolArr);
-                    this.setState({evolChain: evolArr});
+                    let evolObj = this.modifyEvolChain(evolRes.data);
+                    this.setState({evolObj: evolObj});
                 })
                 .catch(error => console.log(error))
           })
@@ -50,12 +87,17 @@ class PokemonEvolution extends Component{
     }
  
     render(){
-        let evolChain = this.state.evolChain ? this.state.evolChain.map((el) => 
-        (<span key={el}>{el}</span>)) : null;
+
+        //map and return obj
+
+        let evolChain = this.state.evolChain ? this.state.evolChain.values.map((el) => 
+        (<p key={el}>{el}</p>)) : null;
+
 
         return (
            <div className={classes.Background}>
               {evolChain}
+              <img src={this.props.pokemonSprite}/>
            </div>
         );
     }

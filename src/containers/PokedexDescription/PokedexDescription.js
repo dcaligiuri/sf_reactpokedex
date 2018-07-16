@@ -8,8 +8,11 @@ class PokedexDescription extends Component{
 
 
     state = {
-        version: "ruby"
+        version: 'omega-ruby'
     }
+
+
+    
 
     versionChangeHandler = (version) => {
         if (version !== this.state.version){
@@ -18,7 +21,6 @@ class PokedexDescription extends Component{
         }
         else 
             return; 
-        //version !== this.state.version ? this.setState({version: version}) : null; 
     }
 
     render(){

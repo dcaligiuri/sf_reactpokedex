@@ -4,10 +4,13 @@ import PokemonPhysical from './components/PokemonPhysical/PokemonPhysical';
 import PokemonEvolution from './components/PokemonEvolution/PokemonEvolution';
 import PokemonStats from './components/PokemonStats/PokemonStats';
 import PokedexDescription from './containers/PokedexDescription/PokedexDescription';
-import PokemonGenders from './components/PokemonGenders/PokemonGenders';
+//import PokemonGenders from './components/PokemonGenders/PokemonGenders';
 import TypeContainer from './containers/TypeContainer/TypeContainer';
 import PokemonProPic from './components/PokemonProPic/PokemonProPic';
-import LoadScreen from './components/UI/LoadScreen/LoadScreen';
+import classes from './App.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronCircleRight, faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons';
+import PokemonVersion from './components/PokemonVersion/PokemonVersion';
 
 class App extends Component {
 
@@ -21,6 +24,7 @@ class App extends Component {
     pokemonWeight: null,
     pokemonAbilities: null,
     pokemonStats: null,
+    pokemonSprite: null,
     loading: true
   };
 
@@ -70,6 +74,7 @@ class App extends Component {
         this.setState({pokemonWeight: (res.data.weight / 10.0)});
         this.setState({pokemonAbilities: res.data.abilities});
         this.setState({pokemonStats: res.data.stats});
+        this.setState({pokemonSprite: res.data.sprites.front_default});
         this.setState({loading: false});
       })
       .catch(error => console.log(error))
@@ -114,6 +119,7 @@ class App extends Component {
         this.setState({pokemonWeight: (res.data.weight / 10.0)});
         this.setState({pokemonAbilities: res.data.abilities});
         this.setState({pokemonStats: res.data.stats});
+        this.setState({pokemonSprite: res.data.sprites.front_default});
         this.setState({loading: false});
       })
       .catch(error => console.log(error));
@@ -134,6 +140,7 @@ class App extends Component {
         this.setState({pokemonWeight: (res.data.weight / 10.0)});
         this.setState({pokemonAbilities: res.data.abilities});
         this.setState({pokemonStats: res.data.stats});
+        this.setState({pokemonSprite: res.data.sprites.front_default});
         this.setState({loading: false});
       })
       .catch(error => console.log(error));
@@ -148,8 +155,22 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-Header">
-          <button onClick={() => this.prevPokemonHandler(this.state.pokemonId)}>{this.getPrevId(this.state.pokemonId)}</button>
-          <button onClick={() => this.nextPokemonHandler(this.state.pokemonId)}>{this.getNextId(this.state.pokemonId)}</button>
+          <button 
+            className={classes.Btn} 
+            onClick={() => this.prevPokemonHandler(this.state.pokemonId)}>
+            <h3 className={classes.BtnLeft}>
+              {this.getPrevId(this.state.pokemonId)}
+            </h3>
+            <h3 className={classes.Chevron} style={{float: 'left'}}><FontAwesomeIcon icon={faChevronCircleLeft} /></h3>
+          </button>
+          <button 
+            className={classes.Btn} 
+            onClick={() => this.nextPokemonHandler(this.state.pokemonId)}>
+            <h3 className={classes.BtnRight}>
+              {this.getNextId(this.state.pokemonId)}
+            </h3>
+            <h3 className={classes.Chevron} style={{float: 'right'}}><FontAwesomeIcon icon={faChevronCircleRight} /></h3>
+          </button>
 
           {/*}
           <Button type="prev" pokemonId={this.state.pokemonId}/>
@@ -167,7 +188,7 @@ class App extends Component {
           weight={this.state.pokemonWeight}
           abilities={this.state.pokemonAbilities}/>
         <TypeContainer loading={this.state.loading} pokemonTypes={this.state.pokemonTypes}/>
-        <PokemonEvolution pokemonId={this.state.pokemonId}/>
+        <PokemonEvolution pokemonSprite={this.state.pokemonSprite} pokemonName={this.state.pokemonName} pokemonId={this.state.pokemonId}/>
         {/*}
        
         <PokemonGenders pokemonName={this.state.pokemonName}/>

@@ -24,8 +24,10 @@ class PokemonPhysical extends Component{
                         <p style={{color:'white'}}>Weight</p>
                         <p>{this.props.weight + " kg"}</p>
                         <p style={{color:'white'}}>Gender</p>
+                        <div> 
                         <FontAwesomeIcon icon={faMars} />
                         <FontAwesomeIcon icon={faVenus} />
+                        </div>
                     </div>
                     <div className={classes.Right}>
                         <p style={{color:'white'}}>Abilities</p>

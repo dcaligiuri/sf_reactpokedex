@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import classes from './PokemonEvolution.css';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 class PokemonEvolution extends Component{
 
@@ -8,9 +10,21 @@ class PokemonEvolution extends Component{
         evolChain: null
     }
 
+    upperCaseFirst(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
     getIdFromSpeciesUrl(str){
         var items = str.split("/");
         return items[items.length - 2 ];
+    }
+
+    pokemonNumtoThreeDigits(strNum){
+        let num = Number(strNum);
+        let newStr = "" + num;
+        let pad = "000";
+        let ans = pad.substring(0, pad.length - newStr.length) + newStr;
+        return ans;
     }
 
     modifyEvolChain(obj){
@@ -36,7 +50,6 @@ class PokemonEvolution extends Component{
             let evolId3 = this.getIdFromSpeciesUrl(obj.chain.evolves_to[0].evolves_to[0].species.url);
             evolObj[evolId3] = obj.chain.evolves_to[0].evolves_to[0].species.name;
         }
-        console.log(evolObj);
         return evolObj;
     }
 
@@ -55,31 +68,13 @@ class PokemonEvolution extends Component{
         }
     }
 
-
-    /*
-    for (let evoledPokemonName of evolArr){
-                        //current img is cached
-                        if (this.props.pokemonName !== evoledPokemonName){
-                            axios.get('https://pokeapi.co/api/v2/pokemon/' + evoledPokemonName + '/')
-                                .then(getSpriteRes => {
-                                    console.log(getSpriteRes.data.sprites.front_default);
-                                })
-                                .catch(error => console.log(error))
-                        }
-                        
-                    }
-                    */
-
-
-    
-
     componentDidMount(){
         axios.get('https://pokeapi.co/api/v2/pokemon-species/' + this.props.pokemonId + '/')
           .then(res => {
             axios.get(res.data.evolution_chain.url)
                 .then(evolRes => {
                     let evolObj = this.modifyEvolChain(evolRes.data);
-                    this.setState({evolObj: evolObj});
+                    this.setState({evolChain: evolObj});
                 })
                 .catch(error => console.log(error))
           })
@@ -87,17 +82,18 @@ class PokemonEvolution extends Component{
     }
  
     render(){
-
-        //map and return obj
-
-        let evolChain = this.state.evolChain ? this.state.evolChain.values.map((el) => 
-        (<p key={el}>{el}</p>)) : null;
-
+        let evolChain = this.state.evolChain ? Object.keys(this.state.evolChain).map(pokeId => 
+        <div key={pokeId}>
+            <img className={classes.PokeSprite} src={'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + pokeId + '.png'}/> 
+            <h3 className={classes.Name}>{this.upperCaseFirst(this.state.evolChain[pokeId])}</h3>
+            <p className={classes.PokemonId}>{'#' + this.pokemonNumtoThreeDigits(pokeId)}</p>
+            <FontAwesomeIcon className={classes.Chevron} icon={faChevronDown}/> 
+        </div>) : null;
 
         return (
            <div className={classes.Background}>
-              {evolChain}
-              <img src={this.props.pokemonSprite}/>
+                <h2 style={{color: 'white'}}>Evolutions</h2>
+                {evolChain}
            </div>
         );
     }

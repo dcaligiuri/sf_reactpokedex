@@ -1,4 +1,34 @@
 .Background {
-    width: 70%;
-    color: darkgray;
+    width: 80%;
+    background-color: #424242;
+}
+
+.PokeSprite {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border:5px solid white;
+    border-radius: 50%;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.PokemonId {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    color: white;
+}
+
+.Name {
+    text-align: center;
+    margin-top: -10px;
+    color:white;
+}
+
+.Chevron {
+    color: white;
+    display: block;
+   margin-left: auto;
+   margin-right: auto;
 }

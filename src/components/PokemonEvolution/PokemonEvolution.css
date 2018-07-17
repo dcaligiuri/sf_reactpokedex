@@ -1,11 +1,14 @@
 .Background {
     width: 80%;
     background-color: #424242;
+    padding: 10px;
+    border-radius: 1%;
+    margin-bottom: 25px;
 }
 
 .Chevron {
     color: white;
     display: block;
-   margin-left: auto;
-   margin-right: auto;
+    margin-left: auto;
+    margin-right: auto;
 }

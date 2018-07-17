@@ -13,24 +13,26 @@ class PokemonPhysical extends Component{
     render(){
 
         let abilities = this.props.abilities ? this.props.abilities.map((el) => 
-        (<p key={el.ability.name}>{this.upperCaseFirst(el.ability.name)}</p>)) : null;
+        (<h4 key={el.ability.name}>{this.upperCaseFirst(el.ability.name)}</h4>)) : null;
 
         if (abilities){
             return (
                 <div className={classes.PhysicalChart}>
                     <div className={classes.Left}>
-                        <p style={{color:'white'}}>Height</p>
-                        <p>{this.props.height + " m"}</p>
-                        <p style={{color:'white'}}>Weight</p>
-                        <p>{this.props.weight + " kg"}</p>
+                        <h4 style={{color:'white'}}>Height</h4>
+                        <h4>{this.props.height + " m"}</h4>
+                        <h4 style={{color:'white'}}>Weight</h4>
+                        <h4>{this.props.weight + " kg"}</h4>
+                        {/*}
                         <p style={{color:'white'}}>Gender</p>
                         <div> 
-                        <FontAwesomeIcon icon={faMars} />
-                        <FontAwesomeIcon icon={faVenus} />
+                            <FontAwesomeIcon icon={faMars} />
+                            <FontAwesomeIcon icon={faVenus} />
                         </div>
+                        {*/}
                     </div>
                     <div className={classes.Right}>
-                        <p style={{color:'white'}}>Abilities</p>
+                        <h4 style={{color:'white'}}>Abilities</h4>
                         {abilities}
                     </div>
                 </div>

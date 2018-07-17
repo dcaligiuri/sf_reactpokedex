@@ -124,7 +124,9 @@ class App extends Component {
         this.setState({pokemonSprite: res.data.sprites.front_default});
         this.setState({loading: false});
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+          console.log(error);
+      });
   }
 
 

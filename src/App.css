@@ -6,6 +6,10 @@
     background-color: darkgray;
 }
 
+.Btn:active {
+    background: #007bff;
+}
+
 .Chevron {
     color: white;
 }

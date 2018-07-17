@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import classes from './LoadScreen.css'
+import classes from './PokeballLoadScreen.css'
 
-class LoadScreen extends Component{
+class PokeballLoadScreen extends Component{
 
 
     render(){
@@ -20,4 +20,4 @@ class LoadScreen extends Component{
     }
 }
 
-export default LoadScreen;
+export default PokeballLoadScreen;

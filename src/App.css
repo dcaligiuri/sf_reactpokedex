@@ -1,9 +1,9 @@
 .Btn {
     width: 50%;
     height: 50px;
-    background-color: darkgray;
     align-items: center; /* align vertical */
     outline:none;
+    background-color: darkgray;
 }
 
 .Chevron {

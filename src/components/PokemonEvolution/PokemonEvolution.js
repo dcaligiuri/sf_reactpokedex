@@ -6,6 +6,7 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import PokemonSprite from './PokemonSprite/PokemonSprite';
 import PokemonName from './PokemonName/PokemonName';
 import PokemonId from './PokemonId/PokemonId';
+import EvolutionLoader from './../UI/EvolutionLoader/EvolutionLoader';
 
 class PokemonEvolution extends Component{
 
@@ -83,8 +84,24 @@ class PokemonEvolution extends Component{
           })
           .catch(error => console.log(error))   
     }
+
+    isLastPokemon(currentPokemonName, lastPokemonName){
+        //if last pokemon, don't display chevron
+        if (currentPokemonName === lastPokemonName){
+            return 'none';
+        }
+        else 
+            return '';
+    }
  
     render(){
+        let lastPokemonName = null; 
+        if (this.state.evolChain){
+            let tempLastPokemonName = this.state.evolChain;
+            var { [Object.keys(this.state.evolChain).pop()]: last } = tempLastPokemonName;
+            lastPokemonName = last;
+        }
+
         let evolChain = this.state.evolChain ? Object.keys(this.state.evolChain).map(pokeId => 
         <div key={pokeId}>
             <PokemonSprite pokeId={pokeId}/>
@@ -92,13 +109,16 @@ class PokemonEvolution extends Component{
             <PokemonId 
                 pokemonName={this.upperCaseFirst(this.state.evolChain[pokeId])} 
                 pokeId={this.pokemonNumtoThreeDigits(pokeId)}/>
-            <FontAwesomeIcon className={classes.Chevron} icon={faChevronDown}/> 
+            <FontAwesomeIcon style={{display: this.isLastPokemon(this.state.evolChain[pokeId], lastPokemonName )}} className={classes.Chevron} icon={faChevronDown}/> 
         </div>) : null;
 
         return (
-           <div className={classes.Background}>
-                {evolChain ? <h2 style={{color: 'white', marginLeft: '15px'}}>Evolutions</h2> : null}
-                {evolChain}
+            <div> 
+                {evolChain ? <div className={classes.Background}>
+                    <h2 style={{color: 'white', marginLeft: '15px'}}>Evolutions</h2>
+                    {evolChain}
+                </div> : null }
+
            </div>
         );
     }

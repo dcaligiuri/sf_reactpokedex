@@ -161,15 +161,24 @@ class App extends Component {
           {pokemonName}
         </header>
         
-        <PokemonProPic loading={this.state.loading} pokemonPaddedId={this.state.pokemonPaddedId} pokemonName={this.state.pokemonName}/>
+        <PokemonProPic 
+          loading={this.state.loading} 
+          pokemonPaddedId={this.state.pokemonPaddedId} 
+          pokemonName={this.state.pokemonName}/>
         {pokemonStats}
-        <PokedexDescription pokemonId={this.state.pokemonId}/> 
+        <PokedexDescription 
+          pokemonId={this.state.pokemonId}/> 
         <PokemonPhysical 
           height={this.state.pokemonHeight} 
           weight={this.state.pokemonWeight}
           abilities={this.state.pokemonAbilities}/>
-        <TypeContainer loading={this.state.loading} pokemonTypes={this.state.pokemonTypes}/>
-        <PokemonEvolution pokemonSprite={this.state.pokemonSprite} pokemonName={this.state.pokemonName} pokemonId={this.state.pokemonId}/>
+        <TypeContainer 
+          loading={this.state.loading} 
+          pokemonTypes={this.state.pokemonTypes}/>
+        <PokemonEvolution 
+          pokemonSprite={this.state.pokemonSprite} 
+          pokemonName={this.state.pokemonName}
+          pokemonId={this.state.pokemonId}/>
         {/*}
           <PokemonGenders pokemonName={this.state.pokemonName}/>
         {*/}

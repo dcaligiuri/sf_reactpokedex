@@ -3,6 +3,9 @@ import classes from './PokemonEvolution.css';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import PokemonSprite from './PokemonSprite/PokemonSprite';
+import PokemonName from './PokemonName/PokemonName';
+import PokemonId from './PokemonId/PokemonId';
 
 class PokemonEvolution extends Component{
 
@@ -84,15 +87,17 @@ class PokemonEvolution extends Component{
     render(){
         let evolChain = this.state.evolChain ? Object.keys(this.state.evolChain).map(pokeId => 
         <div key={pokeId}>
-            <img className={classes.PokeSprite} src={'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + pokeId + '.png'}/> 
-            <h3 className={classes.Name}>{this.upperCaseFirst(this.state.evolChain[pokeId])}</h3>
-            <p className={classes.PokemonId}>{'#' + this.pokemonNumtoThreeDigits(pokeId)}</p>
+            <PokemonSprite pokeId={pokeId}/>
+            <PokemonName pokemonName={this.upperCaseFirst(this.state.evolChain[pokeId])} />
+            <PokemonId 
+                pokemonName={this.upperCaseFirst(this.state.evolChain[pokeId])} 
+                pokeId={this.pokemonNumtoThreeDigits(pokeId)}/>
             <FontAwesomeIcon className={classes.Chevron} icon={faChevronDown}/> 
         </div>) : null;
 
         return (
            <div className={classes.Background}>
-                <h2 style={{color: 'white'}}>Evolutions</h2>
+                {evolChain ? <h2 style={{color: 'white', marginLeft: '15px'}}>Evolutions</h2> : null}
                 {evolChain}
            </div>
         );

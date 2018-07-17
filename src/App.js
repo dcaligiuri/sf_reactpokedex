@@ -78,25 +78,6 @@ class App extends Component {
         this.setState({loading: false});
       })
       .catch(error => console.log(error))
-      /*.then(res => {
-        for (let pokemonType of this.state.pokemonTypes) {
-          let typeUrl = pokemonType.type.url;
-          axios.get(typeUrl)
-            .then(pokemonTypeRes => {
-                let typeObjArr = pokemonTypeRes.data.damage_relations.double_damage_from;
-                let newArr = [];
-                for (let typeObj of typeObjArr){
-                  newArr.push(typeObj.name);
-                }
-                console.log(newArr);
-              //this.setState({pokemonWeaknesses: pokemonTypeRes.data.damage_relations.double_damage_from});
-             // console.log(this.state.pokemonWeaknesses);
-            })
-            .catch(error => console.log(error))
-        }
-      })
-      */
-      
   }
 
 
@@ -190,10 +171,8 @@ class App extends Component {
         <TypeContainer loading={this.state.loading} pokemonTypes={this.state.pokemonTypes}/>
         <PokemonEvolution pokemonSprite={this.state.pokemonSprite} pokemonName={this.state.pokemonName} pokemonId={this.state.pokemonId}/>
         {/*}
-       
-        <PokemonGenders pokemonName={this.state.pokemonName}/>
-        
-    {*/}
+          <PokemonGenders pokemonName={this.state.pokemonName}/>
+        {*/}
         
       </div>
     );

@@ -3,9 +3,7 @@ import classes from './PokeballLoadScreen.css'
 
 class PokeballLoadScreen extends Component{
 
-
     render(){
-
         return (
             <div className={classes.Pokeball}>
                 <div className={classes.Top}>

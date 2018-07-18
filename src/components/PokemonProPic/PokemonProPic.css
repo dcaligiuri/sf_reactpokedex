@@ -5,3 +5,12 @@
     margin-right: auto;
     background-color: #f2f2f2;
 }
+
+
+
+@media (min-width: 500px) {
+    .PokemonProPic {
+        width: 50%;
+        float: left; 
+    }
+ }

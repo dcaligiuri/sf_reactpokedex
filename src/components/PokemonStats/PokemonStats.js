@@ -40,27 +40,32 @@ class PokemonStats extends Component{
 
 
     componentWillReceiveProps(nextProps){
-        const statBases = nextProps.pokemonStats.map(el => el.base_stat);
-        let updatedChartData = {
-            ...this.state.chartData
+        if (nextProps.pokemonStats){
+            const statBases = nextProps.pokemonStats.map(el => el.base_stat);
+            let updatedChartData = {
+                ...this.state.chartData
+            }
+            updatedChartData.datasets[0].data = statBases;
+            this.setState({chartData: updatedChartData});
         }
-        updatedChartData.datasets[0].data = statBases;
-        this.setState({chartData: updatedChartData});
+       
     }
 
     componentDidMount(){
-        const statNames = this.props.pokemonStats.map(el => this.upperCaseStatHeaders(el.stat.name) );
-        const statBases = this.props.pokemonStats.map(el => el.base_stat);
-        let updatedChartData = {
-           ...this.state.chartData
+        if (this.props.pokemonStats){
+            const statNames = this.props.pokemonStats.map(el => this.upperCaseStatHeaders(el.stat.name) );
+            const statBases = this.props.pokemonStats.map(el => el.base_stat);
+            let updatedChartData = {
+                ...this.state.chartData
+            }
+            updatedChartData.labels = statNames;
+            updatedChartData.datasets[0].data = statBases;
+            this.setState({chartData: updatedChartData});
         }
-        updatedChartData.labels = statNames;
-        updatedChartData.datasets[0].data = statBases;
-        this.setState({chartData: updatedChartData});
     }
     
     render(){
-        
+
         return (
             <div style={{width: '80%', marginLeft: 'auto', marginRight: 'auto', height: '300px'}}>
                 <Bar 
@@ -68,7 +73,7 @@ class PokemonStats extends Component{
                     options={{
                         title: {
                             display: true,
-                            text: this.props.pokemonName + "'s Stats",
+                            text:  "Stats",
                             fontSize: '12'
                         },
                         legend: {

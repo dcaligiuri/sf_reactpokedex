@@ -6,6 +6,10 @@
     background-color: darkgray;
 }
 
+.La { 
+    display: inline;
+}
+
 .Btn:active {
     background: #007bff;
 }
@@ -25,3 +29,4 @@
     float: left;
     color: white;
 }
+

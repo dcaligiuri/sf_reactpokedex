@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
-import classes from './Button.css'
+import classes from './Button.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronCircleRight, faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons';
+import Aux from './../../../hoc/Auxiliary/Aux';
 
 class Button extends Component{
-
+    
     pokemonNumtoThreeDigits(strNum){
         let num = Number(strNum);
         let newStr = "" + num;
@@ -26,20 +29,33 @@ class Button extends Component{
     }
 
     render(){
-
-        let idInButton = null;
+        console.log("BTN");
+        let btn = null;
         if (this.props.type === "prev"){
-            idInButton = this.getPrevId(this.props.pokemonId)
+            btn = <button 
+                className={classes.Btn} 
+                onClick={() => this.prevPokemonHandler(this.state.pokemonId)}>
+                <h3 className={classes.BtnLeft}>
+                    {this.getPrevId(this.props.pokemonId)}
+                </h3>
+                <h3 className={classes.Chevron} style={{float: 'left'}}><FontAwesomeIcon icon={faChevronCircleLeft} /></h3>
+          </button>
         }
         else if (this.props.type === "next"){
-            idInButton = this.getNextId(this.props.pokemonId)
+            btn = <button 
+                className={classes.Btn} 
+                onClick={() => this.nextPokemonHandler(this.state.pokemonId)}>
+                <h3 className={classes.BtnRight}>
+                    {this.getNextId(this.props.pokemonId)}
+                </h3>
+                <h3 className={classes.Chevron} style={{float: 'right'}}><FontAwesomeIcon icon={faChevronCircleRight} /></h3>
+          </button>
         }
 
-
         return (
-            <div>
-                <button>{idInButton}</button>
-            </div>
+            <Aux>
+                {btn}
+            </Aux>
         )
     }
 }

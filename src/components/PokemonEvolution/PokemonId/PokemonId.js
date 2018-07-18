@@ -6,10 +6,10 @@ class PokemonId extends Component{
  
     render(){
         return (
-           <div >
-                <p className={classes.PokemonId}>
+           <div>
+                <p style={{color: this.props.textColor}} className={classes.PokemonId}>
                     {'#' + this.props.pokeId}
-                </p>
+                 </p>
            </div>
         );
     }

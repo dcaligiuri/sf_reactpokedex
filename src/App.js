@@ -11,6 +11,10 @@ import classes from './App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronCircleRight, faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import PokemonVersion from './components/PokemonVersion/PokemonVersion';
+import Button from './components/UI/Button/Button';
+import bulbasaur from './Bulbasaur';
+import PokemonName from './components/PokemonEvolution/PokemonName/PokemonName';
+import DesktopContainer from './containers/DesktopContainer/DesktopContainer';
 
 class App extends Component {
 
@@ -28,6 +32,34 @@ class App extends Component {
     loading: true
   };
 
+
+  isMobile(){
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+      return true;
+    }
+    else 
+      return false; 
+  }
+
+
+  localPokemon(){
+    let pokemonId = bulbasaur.id;
+    console.log(pokemonId);
+    let pokemonPaddedId = this.pokemonNumtoThreeDigits(pokemonId);
+    this.setState({pokemonName: bulbasaur.name});
+    console.log(this.state.pokemonName);
+    this.setState({pokemonId: pokemonId});
+    this.setState({pokemonPaddedId: pokemonPaddedId});
+    this.setState({pokemonTypes: bulbasaur.types});
+    this.setState({pokemonHeight: (bulbasaur.height / 10.0)});
+    this.setState({pokemonWeight: (bulbasaur.weight / 10.0)});
+    this.setState({pokemonAbilities: bulbasaur.abilities});
+    this.setState({pokemonStats: bulbasaur.stats});
+    //this.setState({pokemonSprite: bulbasaur.sprites.front_default});
+    this.setState({loading: false});
+  }
+
+
   getPrevId(currPokeId){
     if (currPokeId === 1)
       return "#" + this.pokemonNumtoThreeDigits("802");
@@ -43,7 +75,9 @@ class App extends Component {
   }
 
   upperCaseFirst(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+    if (string){
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    }
   }
 
   pokemonNumtoThreeDigits(strNum){
@@ -53,6 +87,12 @@ class App extends Component {
     let ans = pad.substring(0, pad.length - newStr.length) + newStr;
     return ans;
   }
+
+
+    //<Button type="prev" pokemonId={this.state.pokemonId}/>
+    //<Button type="next" pokemonId={this.state.pokemonId}/>
+
+
 
 
   nextPokemonHandler = (pokemonId) => {
@@ -106,11 +146,16 @@ class App extends Component {
       .catch(error => console.log(error));
   }
 
+
   componentWillMount(){
 
+    //this.check();
+    //this.localPokemon();
+ 
 
     axios.get('https://pokeapi.co/api/v2/pokemon/' + this.state.pokemonId + '/')
       .then(res => {
+        console.log(res.data);
         let pokemonId = res.data.id;
         let pokemonPaddedId = this.pokemonNumtoThreeDigits(pokemonId);
         this.setState({pokemonName: res.data.name});
@@ -126,40 +171,50 @@ class App extends Component {
       })
       .catch(error => {
           console.log(error);
-      });
+      }); 
+   
+ 
   }
 
 
-  render() {     
-    let pokemonName = this.state.pokemonName ? <h2 style={{textAlign: 'center'}}>{this.upperCaseFirst(this.state.pokemonName) + " #" + this.state.pokemonPaddedId }</h2> : null;
+/*
 
+
+
+
+
+
+*/
+
+
+  render() {     
+    const isMobile = this.isMobile();
+
+    let pokemonName = this.state.pokemonName ? <h2 style={{textAlign: 'center'}}>{this.upperCaseFirst(this.state.pokemonName) + " #" + this.state.pokemonPaddedId }</h2> : null;
     let pokemonStats = this.state.pokemonStats ? <PokemonStats pokemonName={this.upperCaseFirst(this.state.pokemonName)} pokemonId={this.state.pokemonId} pokemonStats={this.state.pokemonStats}/> : null;
 
-    return (
-      <div className="App">
-        <header className="App-Header">
-          <button 
-            className={classes.Btn} 
-            onClick={() => this.prevPokemonHandler(this.state.pokemonId)}>
+
+    if (isMobile) {
+      return (
+        <div>
+          <header>
+            <button 
+              className={classes.Btn} 
+              onClick={() => this.prevPokemonHandler(this.state.pokemonId)}>
             <h3 className={classes.BtnLeft}>
               {this.getPrevId(this.state.pokemonId)}
             </h3>
             <h3 className={classes.Chevron} style={{float: 'left'}}><FontAwesomeIcon icon={faChevronCircleLeft} /></h3>
-          </button>
-          <button 
-            className={classes.Btn} 
-            onClick={() => this.nextPokemonHandler(this.state.pokemonId)}>
+            </button>
+
+            <button 
+              className={classes.Btn} 
+              onClick={() => this.nextPokemonHandler(this.state.pokemonId)}>
             <h3 className={classes.BtnRight}>
               {this.getNextId(this.state.pokemonId)}
             </h3>
             <h3 className={classes.Chevron} style={{float: 'right'}}><FontAwesomeIcon icon={faChevronCircleRight} /></h3>
           </button>
-
-          {/*}
-          <Button type="prev" pokemonId={this.state.pokemonId}/>
-          <Button type="next" pokemonId={this.state.pokemonId}/>
-          {*/}
-
           {pokemonName}
         </header>
         
@@ -180,13 +235,20 @@ class App extends Component {
         <PokemonEvolution 
           pokemonSprite={this.state.pokemonSprite} 
           pokemonName={this.state.pokemonName}
-          pokemonId={this.state.pokemonId}/>
-        {/*}
-          <PokemonGenders pokemonName={this.state.pokemonName}/>
-        {*/}
-        
+          pokemonId={this.state.pokemonId}/>      
       </div>
-    );
+      );
+    } else {
+      return (
+        <div>
+          <DesktopContainer />
+        </div>
+      );
+    }
+
+
+
+
   }
 }
 

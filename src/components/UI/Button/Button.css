@@ -1,0 +1,28 @@
+
+.BtnLeft {
+    float: right;
+    color: white;
+}
+
+
+.BtnRight {
+    float: left;
+    color: white;
+}
+
+.Btn {
+    width: 50%;
+    height: 50px;
+    align-items: center; /* align vertical */
+    outline:none;
+    background-color: darkgray;
+    float: left; 
+}
+
+.Btn:active {
+    background: #007bff;
+}
+
+.Chevron {
+    color: white;
+}

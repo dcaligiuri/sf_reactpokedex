@@ -11,6 +11,17 @@
     margin:50px auto;
     animation: spin 1.8s infinite linear;
   }
+
+
+  
+@media (min-width: 500px) {
+  .Pokeball{
+    width: 500px;
+  }
+}
+
+
+
   
   div {
     margin: 0 auto; padding: 0;

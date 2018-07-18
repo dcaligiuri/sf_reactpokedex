@@ -14,6 +14,15 @@ class PokemonEvolution extends Component{
         evolChain: null
     }
 
+    localEvolution(){
+        let localEvol = {
+            1: "bulbasaur",
+            2: "ivysaur",
+            3: "venusaur"
+        }
+        this.setState({evolChain: localEvol});
+    }
+
     upperCaseFirst(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
@@ -73,6 +82,9 @@ class PokemonEvolution extends Component{
     }
 
     componentDidMount(){
+
+        //this.localEvolution();
+ 
         axios.get('https://pokeapi.co/api/v2/pokemon-species/' + this.props.pokemonId + '/')
           .then(res => {
             axios.get(res.data.evolution_chain.url)
@@ -83,6 +95,7 @@ class PokemonEvolution extends Component{
                 .catch(error => console.log(error))
           })
           .catch(error => console.log(error))   
+
     }
 
     isLastPokemon(currentPokemonName, lastPokemonName){
@@ -105,10 +118,11 @@ class PokemonEvolution extends Component{
         let evolChain = this.state.evolChain ? Object.keys(this.state.evolChain).map(pokeId => 
         <div key={pokeId}>
             <PokemonSprite pokeId={pokeId}/>
-            <PokemonName pokemonName={this.upperCaseFirst(this.state.evolChain[pokeId])} />
+            <PokemonName textColor='white' pokemonName={this.upperCaseFirst(this.state.evolChain[pokeId])} />
             <PokemonId 
                 pokemonName={this.upperCaseFirst(this.state.evolChain[pokeId])} 
-                pokeId={this.pokemonNumtoThreeDigits(pokeId)}/>
+                pokeId={this.pokemonNumtoThreeDigits(pokeId)}
+                textColor='white'/>
             <FontAwesomeIcon style={{display: this.isLastPokemon(this.state.evolChain[pokeId], lastPokemonName )}} className={classes.Chevron} icon={faChevronDown}/> 
         </div>) : null;
 

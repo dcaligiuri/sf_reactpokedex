@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import classes from './Button.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronCircleRight, faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons';
-import Aux from './../../../hoc/Auxiliary/Aux';
 
 class Button extends Component{
     
@@ -53,9 +52,9 @@ class Button extends Component{
         }
 
         return (
-            <Aux>
+            <div>
                 {btn}
-            </Aux>
+            </div>
         )
     }
 }

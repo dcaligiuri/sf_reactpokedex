@@ -15,6 +15,7 @@ import Button from './components/UI/Button/Button';
 import bulbasaur from './Bulbasaur';
 import PokemonName from './components/PokemonEvolution/PokemonName/PokemonName';
 import DesktopContainer from './containers/DesktopContainer/DesktopContainer';
+import pokemonArr from './csv/pokemon';
 
 class App extends Component {
 
@@ -40,25 +41,6 @@ class App extends Component {
     else 
       return false; 
   }
-
-
-  localPokemon(){
-    let pokemonId = bulbasaur.id;
-    console.log(pokemonId);
-    let pokemonPaddedId = this.pokemonNumtoThreeDigits(pokemonId);
-    this.setState({pokemonName: bulbasaur.name});
-    console.log(this.state.pokemonName);
-    this.setState({pokemonId: pokemonId});
-    this.setState({pokemonPaddedId: pokemonPaddedId});
-    this.setState({pokemonTypes: bulbasaur.types});
-    this.setState({pokemonHeight: (bulbasaur.height / 10.0)});
-    this.setState({pokemonWeight: (bulbasaur.weight / 10.0)});
-    this.setState({pokemonAbilities: bulbasaur.abilities});
-    this.setState({pokemonStats: bulbasaur.stats});
-    //this.setState({pokemonSprite: bulbasaur.sprites.front_default});
-    this.setState({loading: false});
-  }
-
 
   getPrevId(currPokeId){
     if (currPokeId === 1)
@@ -88,13 +70,6 @@ class App extends Component {
     return ans;
   }
 
-
-    //<Button type="prev" pokemonId={this.state.pokemonId}/>
-    //<Button type="next" pokemonId={this.state.pokemonId}/>
-
-
-
-
   nextPokemonHandler = (pokemonId) => {
     this.setState({loading: true});
     let nextPokemonId = pokemonId + 1;
@@ -102,22 +77,18 @@ class App extends Component {
     if (pokemonId === 802){
       nextPokemonId = 1;
     }
-    axios.get('https://pokeapi.co/api/v2/pokemon/' + nextPokemonId + '/')
-      .then(res => {
-        let pokemonId = res.data.id;
-        let pokemonPaddedId = this.pokemonNumtoThreeDigits(pokemonId);
-        this.setState({pokemonName: res.data.name});
-        this.setState({pokemonId: pokemonId});
-        this.setState({pokemonPaddedId: pokemonPaddedId});
-        this.setState({pokemonTypes: res.data.types});
-        this.setState({pokemonHeight: (res.data.height / 10.0)});
-        this.setState({pokemonWeight: (res.data.weight / 10.0)});
-        this.setState({pokemonAbilities: res.data.abilities});
-        this.setState({pokemonStats: res.data.stats});
-        this.setState({pokemonSprite: res.data.sprites.front_default});
-        this.setState({loading: false});
-      })
-      .catch(error => console.log(error))
+
+    const pokemonPaddedId = this.pokemonNumtoThreeDigits(nextPokemonId);
+    const pokemonName = pokemonArr[nextPokemonId - 1][1];
+    
+    const height = Number(pokemonArr[nextPokemonId - 1][3]) / 10.0;
+    const weight = Number(pokemonArr[nextPokemonId - 1][4]) / 10.0;
+
+    this.setState({pokemonId: nextPokemonId});
+    this.setState({pokemonName: pokemonName});
+    this.setState({pokemonPaddedId: pokemonPaddedId});
+
+    this.setState({loading: false});
   }
 
 
@@ -128,70 +99,48 @@ class App extends Component {
     if (pokemonId === 1){
       prevPokemonId = 802;
     }
-    axios.get('https://pokeapi.co/api/v2/pokemon/' + prevPokemonId + '/')
-      .then(res => {
-        let pokemonId = res.data.id;
-        let pokemonPaddedId = this.pokemonNumtoThreeDigits(pokemonId);
-        this.setState({pokemonName: res.data.name});
-        this.setState({pokemonId: pokemonId});
-        this.setState({pokemonPaddedId: pokemonPaddedId});
-        this.setState({pokemonTypes: res.data.types});
-        this.setState({pokemonHeight: (res.data.height / 10.0)});
-        this.setState({pokemonWeight: (res.data.weight / 10.0)});
-        this.setState({pokemonAbilities: res.data.abilities});
-        this.setState({pokemonStats: res.data.stats});
-        this.setState({pokemonSprite: res.data.sprites.front_default});
-        this.setState({loading: false});
-      })
-      .catch(error => console.log(error));
+
+    const pokemonPaddedId = this.pokemonNumtoThreeDigits(prevPokemonId);
+    const pokemonName = pokemonArr[prevPokemonId - 1][1];
+    
+    const height = Number(pokemonArr[prevPokemonId - 1][3]) / 10.0;
+    const weight = Number(pokemonArr[prevPokemonId - 1][4]) / 10.0;
+
+    this.setState({pokemonId: prevPokemonId});
+    this.setState({pokemonName: pokemonName});
+    this.setState({pokemonPaddedId: pokemonPaddedId});
+
+    this.setState({loading: false});
+
   }
 
 
   componentWillMount(){
+    
+    const pokemonPaddedId = this.pokemonNumtoThreeDigits(this.state.pokemonId);
+    const pokemonName = pokemonArr[this.state.pokemonId - 1][1];
+    
+    const height = Number(pokemonArr[this.state.pokemonId - 1][3]) / 10.0;
+    const weight = Number(pokemonArr[this.state.pokemonId - 1][4]) / 10.0;
 
-    //this.check();
-    //this.localPokemon();
- 
+    this.setState({pokemonName: pokemonName});
+    this.setState({pokemonPaddedId: pokemonPaddedId});
+    this.setState({pokemonHeight: height});
+    this.setState({pokemonWeight: weight});
+    console.log(this.state.height);
+    //this.setState({pokemonAbilities: res.data.abilities});
+    this.setState({loading: false});
 
-    axios.get('https://pokeapi.co/api/v2/pokemon/' + this.state.pokemonId + '/')
-      .then(res => {
-        console.log(res.data);
-        let pokemonId = res.data.id;
-        let pokemonPaddedId = this.pokemonNumtoThreeDigits(pokemonId);
-        this.setState({pokemonName: res.data.name});
-        this.setState({pokemonId: pokemonId});
-        this.setState({pokemonPaddedId: pokemonPaddedId});
-        this.setState({pokemonTypes: res.data.types});
-        this.setState({pokemonHeight: (res.data.height / 10.0)});
-        this.setState({pokemonWeight: (res.data.weight / 10.0)});
-        this.setState({pokemonAbilities: res.data.abilities});
-        this.setState({pokemonStats: res.data.stats});
-        this.setState({pokemonSprite: res.data.sprites.front_default});
-        this.setState({loading: false});
-      })
-      .catch(error => {
-          console.log(error);
-      }); 
-   
- 
+    
+      
   }
 
 
-/*
-
-
-
-
-
-
-*/
-
-
-  render() {     
+  render() {    
+     
     const isMobile = this.isMobile();
 
     let pokemonName = this.state.pokemonName ? <h2 style={{textAlign: 'center'}}>{this.upperCaseFirst(this.state.pokemonName) + " #" + this.state.pokemonPaddedId }</h2> : null;
-    let pokemonStats = this.state.pokemonStats ? <PokemonStats pokemonName={this.upperCaseFirst(this.state.pokemonName)} pokemonId={this.state.pokemonId} pokemonStats={this.state.pokemonStats}/> : null;
 
 
     if (isMobile) {
@@ -222,7 +171,9 @@ class App extends Component {
           loading={this.state.loading} 
           pokemonPaddedId={this.state.pokemonPaddedId} 
           pokemonName={this.state.pokemonName}/>
-        {pokemonStats}
+        <PokemonStats 
+          pokemonName={this.upperCaseFirst(this.state.pokemonName)} 
+          pokemonId={this.state.pokemonId} />
         <PokedexDescription 
           pokemonId={this.state.pokemonId}/> 
         <PokemonPhysical 
@@ -231,6 +182,7 @@ class App extends Component {
           abilities={this.state.pokemonAbilities}/>
         <TypeContainer 
           loading={this.state.loading} 
+          pokemonId={this.state.pokemonId}
           pokemonTypes={this.state.pokemonTypes}/>
         <PokemonEvolution 
           pokemonSprite={this.state.pokemonSprite} 

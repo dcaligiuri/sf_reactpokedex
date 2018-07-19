@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
 import classes from './PokemonEvolution.css';
-import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import PokemonSprite from './PokemonSprite/PokemonSprite';
 import PokemonName from './PokemonName/PokemonName';
 import PokemonId from './PokemonId/PokemonId';
-import EvolutionLoader from './../UI/EvolutionLoader/EvolutionLoader';
+import pokemonSpeciesArr from './../../csv/pokemonSpecies';
 
 class PokemonEvolution extends Component{
 
@@ -14,14 +13,6 @@ class PokemonEvolution extends Component{
         evolChain: null
     }
 
-    localEvolution(){
-        let localEvol = {
-            1: "bulbasaur",
-            2: "ivysaur",
-            3: "venusaur"
-        }
-        this.setState({evolChain: localEvol});
-    }
 
     upperCaseFirst(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
@@ -40,61 +31,47 @@ class PokemonEvolution extends Component{
         return ans;
     }
 
-    modifyEvolChain(obj){
-        //FURTHER ADDITIONS -> HANDLE EEVEE + HITMON STYLE MULTI EVOLUTIONS
-
-        let evolObj = {};
-        //push orig pokemon to array.
-        let evolId = this.getIdFromSpeciesUrl(obj.chain.species.url);
-        evolObj[evolId] = obj.chain.species.name;
-
-        //if you evolve, push next pokemon to array.
-        if (obj.chain.evolves_to.length > 0){
-            let evolId2 = this.getIdFromSpeciesUrl(obj.chain.evolves_to[0].species.url);
-            evolObj[evolId2] = obj.chain.evolves_to[0].species.name;
-        }
-        //if you never evolve, return array with orig pokemon
-        else{
-            return evolObj;
-        }
-        
-        //add third evoled form
-        if (obj.chain.evolves_to[0].evolves_to.length > 0){
-            let evolId3 = this.getIdFromSpeciesUrl(obj.chain.evolves_to[0].evolves_to[0].species.url);
-            evolObj[evolId3] = obj.chain.evolves_to[0].evolves_to[0].species.name;
-        }
-        return evolObj;
-    }
 
     componentWillReceiveProps(nextProps){
         if (this.props.pokemonId !== nextProps.pokemonId ){
-            axios.get('https://pokeapi.co/api/v2/pokemon-species/' + nextProps.pokemonId + '/')
-            .then(res => {
-              axios.get(res.data.evolution_chain.url)
-                  .then(evolRes => {
-                    let evolObj = this.modifyEvolChain(evolRes.data);
-                    this.setState({evolChain: evolObj});
-                  })
-                  .catch(error => console.log(error))
-            })
-            .catch(error => console.log(error))   
+            let evolObj = {};
+            const currentPokemonEvolLineId = pokemonSpeciesArr[Number(nextProps.pokemonId) - 1][4];
+            for(let pokemon of pokemonSpeciesArr){
+              let evolutionaryLineId = null;
+              if (pokemon[4] === currentPokemonEvolLineId ){
+                evolutionaryLineId = pokemon[4];
+              }
+              //add to object if same evol line as current pokemon
+              if (evolutionaryLineId){
+                    //key pokemonId and value pokemonName
+                    evolObj[pokemon[0]] = pokemon[1];
+              }
+              
+          }
+
+          this.setState({evolChain: evolObj});
         }
     }
 
     componentDidMount(){
 
-        //this.localEvolution();
- 
-        axios.get('https://pokeapi.co/api/v2/pokemon-species/' + this.props.pokemonId + '/')
-          .then(res => {
-            axios.get(res.data.evolution_chain.url)
-                .then(evolRes => {
-                    let evolObj = this.modifyEvolChain(evolRes.data);
-                    this.setState({evolChain: evolObj});
-                })
-                .catch(error => console.log(error))
-          })
-          .catch(error => console.log(error))   
+          let evolObj = {};
+          const currentPokemonEvolLineId = pokemonSpeciesArr[Number(this.props.pokemonId) - 1][4];
+          
+          for(let pokemon of pokemonSpeciesArr){
+              let evolutionaryLineId = null;
+              if (pokemon[4] == currentPokemonEvolLineId){
+                evolutionaryLineId = pokemon[4];
+              }
+              //add to object if same evol line as current pokemon
+              if (evolutionaryLineId){
+                    //key pokemonId and value pokemonName
+                    evolObj[pokemon[0]] = pokemon[1];
+              }
+              
+          }
+
+          this.setState({evolChain: evolObj});
 
     }
 

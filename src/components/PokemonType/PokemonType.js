@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import classes from './PokemonType.css';
+import pokemonTypesArr from './../../csv/pokemonTypes';
 
 class PokemonType extends Component{
 

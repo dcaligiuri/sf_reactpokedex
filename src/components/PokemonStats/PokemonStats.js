@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Bar } from 'react-chartjs-2';
+import pokemonStatsArr from './../../csv/pokemonStats';
 
 class PokemonStats extends Component{
 
@@ -40,11 +41,19 @@ class PokemonStats extends Component{
 
 
     componentWillReceiveProps(nextProps){
-        if (nextProps.pokemonStats){
-            const statBases = nextProps.pokemonStats.map(el => el.base_stat);
+        if (nextProps.pokemonId){
+            let statBases = [];
+            const statNames = ['HP', 'Attack', 'Defense', 'Special Attack', 'Special Defense', 'Speed']
+            for (let pokemonStat of pokemonStatsArr){
+                if (pokemonStat[0] == nextProps.pokemonId){
+                    statBases.push(pokemonStat[2]);
+                }
+            }
+        
             let updatedChartData = {
                 ...this.state.chartData
             }
+            updatedChartData.labels = statNames;
             updatedChartData.datasets[0].data = statBases;
             this.setState({chartData: updatedChartData});
         }
@@ -52,9 +61,26 @@ class PokemonStats extends Component{
     }
 
     componentDidMount(){
-        if (this.props.pokemonStats){
+        /*if (this.props.pokemonStats){
             const statNames = this.props.pokemonStats.map(el => this.upperCaseStatHeaders(el.stat.name) );
             const statBases = this.props.pokemonStats.map(el => el.base_stat);
+            let updatedChartData = {
+                ...this.state.chartData
+            }
+            updatedChartData.labels = statNames;
+            updatedChartData.datasets[0].data = statBases;
+            this.setState({chartData: updatedChartData});
+        }*/
+
+        if (this.props.pokemonId){
+            let statBases = [];
+            const statNames = ['HP', 'Attack', 'Defense', 'Special Attack', 'Special Defense', 'Speed']
+            for (let pokemonStat of pokemonStatsArr){
+                if (pokemonStat[0] == this.props.pokemonId){
+                    statBases.push(pokemonStat[2]);
+                }
+            }
+        
             let updatedChartData = {
                 ...this.state.chartData
             }

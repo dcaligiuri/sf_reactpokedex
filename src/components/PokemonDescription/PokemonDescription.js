@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import axios from 'axios';
 import classes from './PokemonDescription.css';
 import pokemonFlavorTextArr from './../../csv/pokemonFlavorText';
 

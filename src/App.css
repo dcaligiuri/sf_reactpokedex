@@ -6,9 +6,7 @@
     background-color: darkgray;
 }
 
-.La { 
-    display: inline;
-}
+
 
 .Btn:active {
     background: #007bff;
@@ -30,3 +28,25 @@
     color: white;
 }
 
+.ColOne{
+    margin: auto;
+    width: 50%;
+}
+
+.ColTwo {
+    margin: auto;
+    width: 50%;
+}
+
+@media (min-width: 500px) {
+    .Btn {
+        width: 100%;
+    }
+    .BtnLeft {
+        float: center;
+    }
+    
+    .BtnRight {
+        float: center;
+    }
+ }

@@ -96,13 +96,26 @@ class TypeContainer extends Component{
         this.setState({currPokemonTypes: currPokemonTypes});
     }
 
+    findBottomStyling(){
+        let bottomStyling = null;
+        if (this.props.onBottom){
+            if (this.state.currPokemonTypes.length === 2 ){
+                bottomStyling = {marginLeft: '25%'};
+            }
+            else if (this.state.currPokemonTypes.length === 1){
+                bottomStyling = {marginLeft: '38%'};
+            }
+        }
+        return bottomStyling;
+    }
+
     render(){
         let pokemonTypes = this.state.currPokemonTypes ? this.state.currPokemonTypes.map((type) => 
         (<PokemonType type={type} key={type}>{type}</PokemonType>)) : null;
 
         return (
-            <div className={classes.TypeContainer}>
-                {this.props.loading ? null : <strong><p>Type</p></strong>}
+            <div className={classes.TypeContainer} style={this.findBottomStyling()}>
+                {this.props.loading || this.props.onBottom ? null : <strong><p>Type</p></strong>}
                 {pokemonTypes}
             </div>
         )

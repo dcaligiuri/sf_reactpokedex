@@ -12,3 +12,15 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+
+@media (min-width: 500px) {
+    .Background {
+        width: 100%;
+        background-color: #424242;
+        padding: 10px;
+        border-radius: 1%;
+        margin-bottom: 25px;
+    }
+ }
+

@@ -6,6 +6,7 @@ import PokemonSprite from './PokemonSprite/PokemonSprite';
 import PokemonName from './PokemonName/PokemonName';
 import PokemonId from './PokemonId/PokemonId';
 import pokemonSpeciesArr from './../../csv/pokemonSpecies';
+import TypeContainer from '../../containers/TypeContainer/TypeContainer';
 
 class PokemonEvolution extends Component{
 
@@ -100,6 +101,7 @@ class PokemonEvolution extends Component{
                 pokemonName={this.upperCaseFirst(this.state.evolChain[pokeId])} 
                 pokeId={this.pokemonNumtoThreeDigits(pokeId)}
                 textColor='white'/>
+            <TypeContainer onBottom pokemonId={pokeId}/>
             <FontAwesomeIcon style={{display: this.isLastPokemon(this.state.evolChain[pokeId], lastPokemonName )}} className={classes.Chevron} icon={faChevronDown}/> 
         </div>) : null;
 

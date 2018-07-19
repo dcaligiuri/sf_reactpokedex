@@ -5,3 +5,13 @@
     margin-top: -15px;
     width: 80%;
 }
+
+
+@media (min-width: 500px) {
+    .PokemonDes {
+        width: 100%;
+        float: center;
+        margin-top: 0px;
+    }
+ }
+

@@ -83,7 +83,7 @@ function CSVToArray( strData, strDelimiter ){
     return( arrData );
 }
 
-
+//id,identifier,species_id,height,weight,base_experience,order,is_default
 const pokemon = `1,bulbasaur,1,7,69,64,1,1
 2,ivysaur,2,10,130,142,2,1
 3,venusaur,3,20,1000,236,3,1

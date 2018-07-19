@@ -12,10 +12,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronCircleRight, faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import PokemonVersion from './components/PokemonVersion/PokemonVersion';
 import Button from './components/UI/Button/Button';
-import bulbasaur from './Bulbasaur';
 import PokemonName from './components/PokemonEvolution/PokemonName/PokemonName';
-import DesktopContainer from './containers/DesktopContainer/DesktopContainer';
 import pokemonArr from './csv/pokemon';
+import pokemonSpeciesArr from './csv/pokemonSpecies';
+import { Grid, Row, Col } from 'react-bootstrap';
 
 class App extends Component {
 
@@ -30,6 +30,7 @@ class App extends Component {
     pokemonAbilities: null,
     pokemonStats: null,
     pokemonSprite: null,
+    pokemonGenderRate: null,
     loading: true
   };
 
@@ -70,24 +71,34 @@ class App extends Component {
     return ans;
   }
 
+  getGenderRate(pokemonId){
+    for (let pokemon of pokemonSpeciesArr){
+      if (pokemon[0] == pokemonId){
+        return pokemon[8];
+      }
+    }
+  }
+
   nextPokemonHandler = (pokemonId) => {
     this.setState({loading: true});
     let nextPokemonId = pokemonId + 1;
     //next for Blacephalon is Bulbasaur
     if (pokemonId === 802){
       nextPokemonId = 1;
-    }
+  }
 
     const pokemonPaddedId = this.pokemonNumtoThreeDigits(nextPokemonId);
     const pokemonName = pokemonArr[nextPokemonId - 1][1];
-    
-    const height = Number(pokemonArr[nextPokemonId - 1][3]) / 10.0;
-    const weight = Number(pokemonArr[nextPokemonId - 1][4]) / 10.0;
+    const pokemonHeight = Number(pokemonArr[nextPokemonId - 1][3]) / 10.0;
+    const pokemonWeight = Number(pokemonArr[nextPokemonId - 1][4]) / 10.0;
+    const pokemonGenderRate = this.getGenderRate(nextPokemonId)
 
     this.setState({pokemonId: nextPokemonId});
     this.setState({pokemonName: pokemonName});
     this.setState({pokemonPaddedId: pokemonPaddedId});
-
+    this.setState({pokemonHeight: pokemonHeight});
+    this.setState({pokemonWeight: pokemonWeight});
+    this.setState({pokemonGenderRate: pokemonGenderRate});
     this.setState({loading: false});
   }
 
@@ -102,14 +113,16 @@ class App extends Component {
 
     const pokemonPaddedId = this.pokemonNumtoThreeDigits(prevPokemonId);
     const pokemonName = pokemonArr[prevPokemonId - 1][1];
-    
-    const height = Number(pokemonArr[prevPokemonId - 1][3]) / 10.0;
-    const weight = Number(pokemonArr[prevPokemonId - 1][4]) / 10.0;
+    const pokemonHeight = Number(pokemonArr[prevPokemonId - 1][3]) / 10.0;
+    const pokemonWeight = Number(pokemonArr[prevPokemonId - 1][4]) / 10.0;
+    const pokemonGenderRate = this.getGenderRate(prevPokemonId)
 
     this.setState({pokemonId: prevPokemonId});
     this.setState({pokemonName: pokemonName});
     this.setState({pokemonPaddedId: pokemonPaddedId});
-
+    this.setState({pokemonHeight: pokemonHeight});
+    this.setState({pokemonWeight: pokemonWeight});
+    this.setState({pokemonGenderRate: pokemonGenderRate});
     this.setState({loading: false});
 
   }
@@ -119,15 +132,15 @@ class App extends Component {
     
     const pokemonPaddedId = this.pokemonNumtoThreeDigits(this.state.pokemonId);
     const pokemonName = pokemonArr[this.state.pokemonId - 1][1];
-    
-    const height = Number(pokemonArr[this.state.pokemonId - 1][3]) / 10.0;
-    const weight = Number(pokemonArr[this.state.pokemonId - 1][4]) / 10.0;
+    const pokemonHeight = Number(pokemonArr[this.state.pokemonId - 1][3]) / 10.0;
+    const pokemonWeight = Number(pokemonArr[this.state.pokemonId - 1][4]) / 10.0;
+    const pokemonGenderRate = this.getGenderRate(this.state.pokemonId)
 
     this.setState({pokemonName: pokemonName});
     this.setState({pokemonPaddedId: pokemonPaddedId});
-    this.setState({pokemonHeight: height});
-    this.setState({pokemonWeight: weight});
-    console.log(this.state.height);
+    this.setState({pokemonHeight: pokemonHeight});
+    this.setState({pokemonWeight: pokemonWeight});
+    this.setState({pokemonGenderRate: pokemonGenderRate});
     //this.setState({pokemonAbilities: res.data.abilities});
     this.setState({loading: false});
 
@@ -179,6 +192,7 @@ class App extends Component {
         <PokemonPhysical 
           height={this.state.pokemonHeight} 
           weight={this.state.pokemonWeight}
+          genderRate={this.state.pokemonGenderRate}
           abilities={this.state.pokemonAbilities}/>
         <TypeContainer 
           loading={this.state.loading} 
@@ -193,7 +207,75 @@ class App extends Component {
     } else {
       return (
         <div>
-          <DesktopContainer />
+
+          
+         <Grid>
+            <Row className="show-grid">
+            <Col lg={4} lgOffset={2} fluid>
+            <button 
+              className={classes.Btn} 
+              onClick={() => this.prevPokemonHandler(this.state.pokemonId)}>
+            <h3 className={classes.BtnLeft}>
+              {this.getPrevId(this.state.pokemonId)}
+            </h3>
+            <h3 className={classes.Chevron} style={{float: 'left'}}><FontAwesomeIcon icon={faChevronCircleLeft} /></h3>
+            </button>
+
+            
+            </Col>
+            <Col lg={4} fluid>
+            <button 
+              className={classes.Btn} 
+              onClick={() => this.nextPokemonHandler(this.state.pokemonId)}>
+            <h3 className={classes.BtnRight}>
+              {this.getNextId(this.state.pokemonId)}
+            </h3>
+            <h3 className={classes.Chevron} style={{float: 'right'}}><FontAwesomeIcon icon={faChevronCircleRight} /></h3>
+          </button>
+            </Col>
+          </Row>
+          <Row className="show-grid">
+            <Col lg={8} lgOffset={2}>
+                
+            {pokemonName}
+            
+            </Col>
+          </Row>
+           <Row className="show-grid">
+            <Col lg={4} lgOffset={2}>
+            <PokemonProPic 
+            style={{width: '50%'}}
+          loading={this.state.loading} 
+          pokemonPaddedId={this.state.pokemonPaddedId} 
+          pokemonName={this.state.pokemonName}/>
+          <PokemonStats 
+          pokemonName={this.upperCaseFirst(this.state.pokemonName)} 
+          pokemonId={this.state.pokemonId} />
+            </Col>
+            <Col lg={4}>
+            <PokedexDescription 
+          pokemonId={this.state.pokemonId}/> 
+            <PokemonPhysical 
+          height={this.state.pokemonHeight} 
+          weight={this.state.pokemonWeight}
+          genderRate={this.state.pokemonGenderRate}
+          abilities={this.state.pokemonAbilities}/>
+          <TypeContainer 
+          loading={this.state.loading} 
+          pokemonId={this.state.pokemonId}
+          pokemonTypes={this.state.pokemonTypes}/>
+            </Col>
+          </Row>
+          <Row className="show-grid">
+            <Col lg={8} lgOffset={2}>
+            <PokemonEvolution 
+          pokemonSprite={this.state.pokemonSprite} 
+          pokemonName={this.state.pokemonName}
+          pokemonId={this.state.pokemonId}/>
+            </Col>
+          </Row>
+        </Grid>
+       
         </div>
       );
     }

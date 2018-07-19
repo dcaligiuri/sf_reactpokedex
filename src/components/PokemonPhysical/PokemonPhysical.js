@@ -15,7 +15,7 @@ class PokemonPhysical extends Component{
         let abilities = this.props.abilities ? this.props.abilities.map((el) => 
         (<h4 key={el.ability.name}>{this.upperCaseFirst(el.ability.name)}</h4>)) : null;
 
-        if (abilities){
+        if (this.props.height){
             return (
                 <div className={classes.PhysicalChart}>
                     <div className={classes.Left}>
@@ -23,13 +23,11 @@ class PokemonPhysical extends Component{
                         <h4>{this.props.height + " m"}</h4>
                         <h4 style={{color:'white'}}>Weight</h4>
                         <h4>{this.props.weight + " kg"}</h4>
-                        {/*}
                         <h4 style={{color:'white'}}>Gender</h4>
                         <div> 
-                            <FontAwesomeIcon icon={faMars} />
-                            <FontAwesomeIcon icon={faVenus} />
+                            {this.props.genderRate !== '8' ? <FontAwesomeIcon icon={faMars} /> : null}
+                            {this.props.genderRate !== '0' ? <FontAwesomeIcon icon={faVenus} /> : null}
                         </div>
-                        {*/}
                     </div>
                     <div className={classes.Right}>
                         <h4 style={{color:'white'}}>Abilities</h4>

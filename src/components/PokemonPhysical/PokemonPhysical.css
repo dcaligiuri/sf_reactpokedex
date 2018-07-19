@@ -22,14 +22,13 @@
 }
 
 
-
-
 @media (min-width: 500px) {
     .PhysicalChart {
-        float: left;
-        width: 50%;
+        width: 100%;
+        float: center;
     }
  }
+
 
 
 

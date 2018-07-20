@@ -45,8 +45,8 @@ class PokemonStats extends Component{
             let statBases = [];
             const statNames = ['HP', 'Attack', 'Defense', 'Special Attack', 'Special Defense', 'Speed']
             for (let pokemonStat of pokemonStatsArr){
-                if (pokemonStat[0] == nextProps.pokemonId){
-                    statBases.push(pokemonStat[2]);
+                if (pokemonStat.pokemon_id == nextProps.pokemonId){
+                    statBases.push(pokemonStat.base_stat);
                 }
             }
         
@@ -72,12 +72,13 @@ class PokemonStats extends Component{
             this.setState({chartData: updatedChartData});
         }*/
 
+
         if (this.props.pokemonId){
             let statBases = [];
             const statNames = ['HP', 'Attack', 'Defense', 'Special Attack', 'Special Defense', 'Speed']
             for (let pokemonStat of pokemonStatsArr){
-                if (pokemonStat[0] == this.props.pokemonId){
-                    statBases.push(pokemonStat[2]);
+                if (pokemonStat.pokemon_id == this.props.pokemonId){
+                    statBases.push(pokemonStat.base_stat);
                 }
             }
         

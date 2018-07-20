@@ -31,6 +31,8 @@ class App extends Component {
     pokemonStats: null,
     pokemonSprite: null,
     pokemonGenderRate: null,
+    nextPokemonName: null,
+    prevPokemonName: null,
     loading: true
   };
 
@@ -41,6 +43,21 @@ class App extends Component {
     }
     else 
       return false; 
+  }
+
+  getPrevIdNumber(currPokeId){
+    if (currPokeId === 1)
+      return 802;
+    else 
+      return --currPokeId;
+  }
+
+
+  getNextIdNumber(currPokeId){
+    if (currPokeId === 802)
+      return 1;
+    else
+      return ++currPokeId;
   }
 
   getPrevId(currPokeId){
@@ -88,10 +105,17 @@ class App extends Component {
   }
 
     const pokemonPaddedId = this.pokemonNumtoThreeDigits(nextPokemonId);
-    const pokemonName = pokemonArr[nextPokemonId - 1][1];
-    const pokemonHeight = Number(pokemonArr[nextPokemonId - 1][3]) / 10.0;
-    const pokemonWeight = Number(pokemonArr[nextPokemonId - 1][4]) / 10.0;
-    const pokemonGenderRate = this.getGenderRate(nextPokemonId)
+    const pokemonName = pokemonArr[nextPokemonId - 1].identifier;
+    const pokemonHeight = Number(pokemonArr[nextPokemonId - 1].height) / 10.0;
+    const pokemonWeight = Number(pokemonArr[nextPokemonId - 1].weight) / 10.0;
+    const pokemonGenderRate = this.getGenderRate(nextPokemonId);
+
+
+    const newPrevPokemonId = this.getPrevIdNumber(nextPokemonId);
+    const newNextPokemonId = this.getNextIdNumber(nextPokemonId);
+    const newPrevPokemonName = pokemonArr[newPrevPokemonId - 1].identifier;
+    const newNextPokemonName = pokemonArr[newNextPokemonId - 1].identifier;
+
 
     this.setState({pokemonId: nextPokemonId});
     this.setState({pokemonName: pokemonName});
@@ -99,6 +123,8 @@ class App extends Component {
     this.setState({pokemonHeight: pokemonHeight});
     this.setState({pokemonWeight: pokemonWeight});
     this.setState({pokemonGenderRate: pokemonGenderRate});
+    this.setState({nextPokemonName: newNextPokemonName});
+    this.setState({prevPokemonName: newPrevPokemonName});
     this.setState({loading: false});
   }
 
@@ -112,36 +138,54 @@ class App extends Component {
     }
 
     const pokemonPaddedId = this.pokemonNumtoThreeDigits(prevPokemonId);
-    const pokemonName = pokemonArr[prevPokemonId - 1][1];
-    const pokemonHeight = Number(pokemonArr[prevPokemonId - 1][3]) / 10.0;
-    const pokemonWeight = Number(pokemonArr[prevPokemonId - 1][4]) / 10.0;
-    const pokemonGenderRate = this.getGenderRate(prevPokemonId)
+    const pokemonName = pokemonArr[prevPokemonId - 1].identifier;
+    const pokemonHeight = Number(pokemonArr[prevPokemonId - 1].height) / 10.0;
+    const pokemonWeight = Number(pokemonArr[prevPokemonId - 1].weight) / 10.0;
+    const pokemonGenderRate = this.getGenderRate(prevPokemonId);
 
+    const newPrevPokemonId = this.getPrevIdNumber(prevPokemonId);
+    const newNextPokemonId = this.getNextIdNumber(prevPokemonId);
+    const newPrevPokemonName = pokemonArr[newPrevPokemonId - 1].identifier;
+    const newNextPokemonName = pokemonArr[newNextPokemonId - 1].identifier;
+
+  
     this.setState({pokemonId: prevPokemonId});
     this.setState({pokemonName: pokemonName});
     this.setState({pokemonPaddedId: pokemonPaddedId});
     this.setState({pokemonHeight: pokemonHeight});
     this.setState({pokemonWeight: pokemonWeight});
     this.setState({pokemonGenderRate: pokemonGenderRate});
+    this.setState({nextPokemonName: newNextPokemonName});
+    this.setState({prevPokemonName: newPrevPokemonName});
     this.setState({loading: false});
 
   }
 
 
   componentWillMount(){
-    
-    const pokemonPaddedId = this.pokemonNumtoThreeDigits(this.state.pokemonId);
-    const pokemonName = pokemonArr[this.state.pokemonId - 1][1];
-    const pokemonHeight = Number(pokemonArr[this.state.pokemonId - 1][3]) / 10.0;
-    const pokemonWeight = Number(pokemonArr[this.state.pokemonId - 1][4]) / 10.0;
-    const pokemonGenderRate = this.getGenderRate(this.state.pokemonId)
 
+    const pokemonPaddedId = this.pokemonNumtoThreeDigits(this.state.pokemonId);
+    const pokemonName = pokemonArr[this.state.pokemonId - 1].identifier;
+    const pokemonHeight = Number(pokemonArr[this.state.pokemonId - 1].height) / 10.0;
+    const pokemonWeight = Number(pokemonArr[this.state.pokemonId - 1].weight) / 10.0;
+    const pokemonGenderRate = this.getGenderRate(this.state.pokemonId);
+    const nextPokemonId = this.getNextIdNumber(this.state.pokemonId);
+    const prevPokemonId = this.getPrevIdNumber(this.state.pokemonId);
+    const nextPokemonName = pokemonArr[nextPokemonId - 1].identifier;
+    const prevPokemonName = pokemonArr[prevPokemonId - 1].identifier;
+
+    
     this.setState({pokemonName: pokemonName});
     this.setState({pokemonPaddedId: pokemonPaddedId});
     this.setState({pokemonHeight: pokemonHeight});
     this.setState({pokemonWeight: pokemonWeight});
     this.setState({pokemonGenderRate: pokemonGenderRate});
+    this.setState({nextPokemonName: nextPokemonName});
+    this.setState({prevPokemonName: prevPokemonName});
+
+
     //this.setState({pokemonAbilities: res.data.abilities});
+    
     this.setState({loading: false});
 
     
@@ -189,11 +233,11 @@ class App extends Component {
           pokemonId={this.state.pokemonId} />
         <PokedexDescription 
           pokemonId={this.state.pokemonId}/> 
-        <PokemonPhysical 
+        {this.state.pokemonId ? <PokemonPhysical 
           height={this.state.pokemonHeight} 
           weight={this.state.pokemonWeight}
           genderRate={this.state.pokemonGenderRate}
-          abilities={this.state.pokemonAbilities}/>
+          pokemonId={this.state.pokemonId}/> : null}
         <TypeContainer 
           loading={this.state.loading} 
           pokemonId={this.state.pokemonId}
@@ -211,28 +255,30 @@ class App extends Component {
           
          <Grid>
             <Row className="show-grid">
-            <Col lg={4} lgOffset={2} fluid>
+              <Col lg={8} lgOffset={2}>
             <button 
               className={classes.Btn} 
               onClick={() => this.prevPokemonHandler(this.state.pokemonId)}>
             <h3 className={classes.BtnLeft}>
               {this.getPrevId(this.state.pokemonId)}
+              {' '}
+              <b>{this.upperCaseFirst(this.state.prevPokemonName)}</b>
             </h3>
             <h3 className={classes.Chevron} style={{float: 'left'}}><FontAwesomeIcon icon={faChevronCircleLeft} /></h3>
             </button>
 
-            
-            </Col>
-            <Col lg={4} fluid>
+
             <button 
               className={classes.Btn} 
               onClick={() => this.nextPokemonHandler(this.state.pokemonId)}>
             <h3 className={classes.BtnRight}>
+              <b>{this.upperCaseFirst(this.state.nextPokemonName)}</b>
+              {' '}
               {this.getNextId(this.state.pokemonId)}
             </h3>
             <h3 className={classes.Chevron} style={{float: 'right'}}><FontAwesomeIcon icon={faChevronCircleRight} /></h3>
           </button>
-            </Col>
+              </Col>
           </Row>
           <Row className="show-grid">
             <Col lg={8} lgOffset={2}>
@@ -255,11 +301,11 @@ class App extends Component {
             <Col lg={4}>
             <PokedexDescription 
           pokemonId={this.state.pokemonId}/> 
-            <PokemonPhysical 
+            {this.state.pokemonId ? <PokemonPhysical 
           height={this.state.pokemonHeight} 
           weight={this.state.pokemonWeight}
           genderRate={this.state.pokemonGenderRate}
-          abilities={this.state.pokemonAbilities}/>
+          pokemonId={this.state.pokemonId}/> : null}
           <TypeContainer 
           loading={this.state.loading} 
           pokemonId={this.state.pokemonId}

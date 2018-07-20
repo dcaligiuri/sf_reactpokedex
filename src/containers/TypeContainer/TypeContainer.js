@@ -73,9 +73,9 @@ class TypeContainer extends Component{
         if (nextProps.pokemonId){
             let currPokemonTypes = [];
             for(let type of pokemonTypesArr){
-            if (type[0] == nextProps.pokemonId){
-                const englishType = type[1];
-                currPokemonTypes.push(this.translateTypeId(englishType));
+            if (type.pokemon_id == nextProps.pokemonId){
+                const typeId = type.type_id;
+                currPokemonTypes.push(this.translateTypeId(typeId));
             }
             
         }
@@ -87,9 +87,9 @@ class TypeContainer extends Component{
     componentWillMount(){
         let currPokemonTypes = [];
         for(let type of pokemonTypesArr){
-            if (type[0] == this.props.pokemonId){
-                const englishType = type[1];
-                currPokemonTypes.push(this.translateTypeId(englishType));
+            if (type.pokemon_id == this.props.pokemonId){
+                const typeId = type.type_id;
+                currPokemonTypes.push(this.translateTypeId(typeId));
             }
             
         }

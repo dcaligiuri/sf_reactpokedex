@@ -4,28 +4,32 @@
     align-items: center; /* align vertical */
     outline:none;
     background-color: darkgray;
+    
 }
 
 
 
 .Btn:active {
-    background: #007bff;
+    background: #00ccff;
 }
 
 .Chevron {
     color: white;
+    margin-top: 10px;
 }
 
 
 .BtnLeft {
     float: right;
     color: white;
+    margin-top: 10px;
 }
 
 
 .BtnRight {
     float: left;
     color: white;
+    margin-top: 10px;
 }
 
 .ColOne{
@@ -38,15 +42,26 @@
     width: 50%;
 }
 
+
 @media (min-width: 500px) {
+
+
     .Btn {
-        width: 100%;
+        width: 50%;
     }
+    
     .BtnLeft {
         float: center;
+        margin-top: 10px;
     }
     
     .BtnRight {
         float: center;
+        margin-top: 10px;
     }
+
+    .Chevron {
+        margin-top: 10px;
+    }
+
  }

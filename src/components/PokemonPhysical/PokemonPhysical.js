@@ -2,18 +2,57 @@ import React, {Component} from 'react';
 import classes from './PokemonPhysical.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVenus, faMars } from '@fortawesome/free-solid-svg-icons';
+import abilitiesArr from './../../csv/abilities';
+import pokemonAbilitiesArr from './../../csv/pokemonAbilities';
 
 
 class PokemonPhysical extends Component{
+
+    state = {
+        abilities : null
+    }
 
     upperCaseFirst(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
+
+    componentWillReceiveProps(nextProps){
+        if (nextProps.pokemonId){
+            let abilities = [];
+            for (let pokemon of pokemonAbilitiesArr){
+                if (pokemon.pokemon_id == nextProps.pokemonId){
+                    for (let ability of abilitiesArr){
+                        if (pokemon.ability_id == ability.id){
+                            abilities.push(ability.identifier);
+                        }
+                    }
+                }
+            }
+            this.setState({abilities: abilities})
+        }
+       
+    }
+
+    componentWillMount(){
+        let abilities = [];
+        for (let pokemon of pokemonAbilitiesArr){
+            if (pokemon.pokemon_id == this.props.pokemonId){
+                for (let ability of abilitiesArr){
+                    if (pokemon.ability_id == ability.id){
+                        abilities.push(ability.identifier);
+                    }
+                }
+            }
+        }
+        this.setState({abilities: abilities})
+    }
+
     render(){
 
-        let abilities = this.props.abilities ? this.props.abilities.map((el) => 
-        (<h4 key={el.ability.name}>{this.upperCaseFirst(el.ability.name)}</h4>)) : null;
+
+        let abilities = this.state.abilities ? this.state.abilities.map((abilityName) => 
+        (<h4 key={abilityName}>{this.upperCaseFirst(abilityName)}</h4>)) : null;
 
         if (this.props.height){
             return (

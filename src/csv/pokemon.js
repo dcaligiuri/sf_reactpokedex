@@ -1,90 +1,33 @@
 
+function csvJSON(csv){
 
-function CSVToArray( strData, strDelimiter ){
-    // Check to see if the delimiter is defined. If not,
-    // then default to comma.
-    strDelimiter = (strDelimiter || ",");
+    var lines=csv.split("\n");
+  
+    var result = [];
+  
+    var headers=lines[0].split(",");
 
-    // Create a regular expression to parse the CSV values.
-    var objPattern = new RegExp(
-        (
-            // Delimiters.
-            "(\\" + strDelimiter + "|\\r?\\n|\\r|^)" +
-
-            // Quoted fields.
-            "(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|" +
-
-            // Standard fields.
-            "([^\"\\" + strDelimiter + "\\r\\n]*))"
-        ),
-        "gi"
-        );
-
-
-    // Create an array to hold our data. Give the array
-    // a default empty first row.
-    var arrData = [[]];
-
-    // Create an array to hold our individual pattern
-    // matching groups.
-    var arrMatches = null;
-
-
-    // Keep looping over the regular expression matches
-    // until we can no longer find a match.
-    while (arrMatches = objPattern.exec( strData )){
-
-        // Get the delimiter that was found.
-        var strMatchedDelimiter = arrMatches[ 1 ];
-
-        // Check to see if the given delimiter has a length
-        // (is not the start of string) and if it matches
-        // field delimiter. If id does not, then we know
-        // that this delimiter is a row delimiter.
-        if (
-            strMatchedDelimiter.length &&
-            strMatchedDelimiter !== strDelimiter
-            ){
-
-            // Since we have reached a new row of data,
-            // add an empty row to our data array.
-            arrData.push( [] );
-
+  
+    for(var i=1;i<lines.length;i++){
+  
+        var obj = {};
+        var currentline=lines[i].split(",");
+  
+        for(var j=0;j<headers.length;j++){
+            obj[headers[j]] = currentline[j];
         }
-
-        var strMatchedValue;
-
-        // Now that we have our delimiter out of the way,
-        // let's check to see which kind of value we
-        // captured (quoted or unquoted).
-        if (arrMatches[ 2 ]){
-
-            // We found a quoted value. When we capture
-            // this value, unescape any double quotes.
-            strMatchedValue = arrMatches[ 2 ].replace(
-                new RegExp( "\"\"", "g" ),
-                "\""
-                );
-
-        } else {
-
-            // We found a non-quoted value.
-            strMatchedValue = arrMatches[ 3 ];
-
-        }
-
-
-        // Now that we have our value string, let's add
-        // it to the data array.
-        arrData[ arrData.length - 1 ].push( strMatchedValue );
+  
+        result.push(obj);
+  
     }
+  
+    //return result; //JavaScript object
+    return result; //JSON
+  }
 
-    // Return the parsed data.
-    return( arrData );
-}
 
-//id,identifier,species_id,height,weight,base_experience,order,is_default
-const pokemon = `1,bulbasaur,1,7,69,64,1,1
+const pokemon = `id,identifier,species_id,height,weight,base_experience,order,is_default
+1,bulbasaur,1,7,69,64,1,1
 2,ivysaur,2,10,130,142,2,1
 3,venusaur,3,20,1000,236,3,1
 4,charmander,4,6,85,62,5,1
@@ -1032,8 +975,8 @@ const pokemon = `1,bulbasaur,1,7,69,64,1,1
 10144,mimikyu-totem-disguised,778,4,28,167,916,0
 10145,mimikyu-totem-busted,778,4,28,167,917,0
 10146,kommo-o-totem,784,24,2075,270,924,0
-10147,magearna-original,801,10,805,120,942,0`
+10147,magearna-original,801,10,805,120,942,0`;
 
-const pokemonArr = CSVToArray(pokemon, ',');
+const pokemonArr = csvJSON(pokemon);
 
 export default pokemonArr;

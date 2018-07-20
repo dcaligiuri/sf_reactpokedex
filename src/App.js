@@ -10,7 +10,6 @@ import PokemonProPic from './components/PokemonProPic/PokemonProPic';
 import classes from './App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronCircleRight, faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons';
-import PokemonVersion from './components/PokemonVersion/PokemonVersion';
 import Button from './components/UI/Button/Button';
 import PokemonName from './components/PokemonEvolution/PokemonName/PokemonName';
 import pokemonArr from './csv/pokemon';
@@ -44,6 +43,14 @@ class App extends Component {
     else 
       return false; 
   }
+
+  
+  handleKeyPress = (event) => {
+    if(event.key == 'Enter'){
+      console.log('enter press here! ')
+    }
+  }
+
 
   getPrevIdNumber(currPokeId){
     if (currPokeId === 1)
@@ -232,6 +239,7 @@ class App extends Component {
           pokemonName={this.upperCaseFirst(this.state.pokemonName)} 
           pokemonId={this.state.pokemonId} />
         <PokedexDescription 
+          isMobile={isMobile}
           pokemonId={this.state.pokemonId}/> 
         {this.state.pokemonId ? <PokemonPhysical 
           height={this.state.pokemonHeight} 
@@ -239,6 +247,12 @@ class App extends Component {
           genderRate={this.state.pokemonGenderRate}
           pokemonId={this.state.pokemonId}/> : null}
         <TypeContainer 
+          render="Types"
+          loading={this.state.loading} 
+          pokemonId={this.state.pokemonId}
+          pokemonTypes={this.state.pokemonTypes}/>
+        <TypeContainer 
+          render="Weak Against"
           loading={this.state.loading} 
           pokemonId={this.state.pokemonId}
           pokemonTypes={this.state.pokemonTypes}/>
@@ -307,10 +321,16 @@ class App extends Component {
           genderRate={this.state.pokemonGenderRate}
           pokemonId={this.state.pokemonId}/> : null}
           <TypeContainer 
-          loading={this.state.loading} 
-          pokemonId={this.state.pokemonId}
-          pokemonTypes={this.state.pokemonTypes}/>
-            </Col>
+            loading={this.state.loading} 
+            pokemonId={this.state.pokemonId}
+            pokemonTypes={this.state.pokemonTypes}
+            render="Types"/>
+           <TypeContainer 
+            loading={this.state.loading} 
+            pokemonId={this.state.pokemonId}
+            pokemonTypes={this.state.pokemonTypes}
+            render="Weak Against"/>
+          </Col>
           </Row>
           <Row className="show-grid">
             <Col lg={8} lgOffset={2}>

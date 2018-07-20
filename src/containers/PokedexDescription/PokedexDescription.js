@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 //import classes from './PokedexDescription.css';
 //import axios from 'axios';
 import PokemonDescription from '../../components/PokemonDescription/PokemonDescription';
-//import PokemonVersion from '../../components/PokemonVersion/PokemonVersion';
+import PokemonVersion from '../../components/PokemonVersion/PokemonVersion';
 
 class PokedexDescription extends Component{
 
@@ -11,8 +11,6 @@ class PokedexDescription extends Component{
         version: 'omega-ruby'
     }
 
-
-    
 
     versionChangeHandler = (version) => {
         if (version !== this.state.version){
@@ -28,7 +26,7 @@ class PokedexDescription extends Component{
             <div onChange={this.handleChange}>
                 <PokemonDescription pokemonId={this.props.pokemonId}/>
                 {/*}<PokemonDescription activeVersion={this.state.version} pokemonId={this.props.pokemonId}/>{*/}
-                {/*}<PokemonVersion onChangeVersion={this.versionChangeHandler}/>{*/}
+                {/*{this.props.isMobile ? null : <PokemonVersion onChangeVersion={this.versionChangeHandler}/>}{*/}
             </div>
         )
     }

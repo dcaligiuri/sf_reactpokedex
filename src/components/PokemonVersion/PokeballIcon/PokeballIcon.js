@@ -9,7 +9,7 @@ class PokeBallIcon extends Component{
         return (
            <div>
               <svg xmlns="http://www.w3.org/2000/svg"
-     width="1in" height="1in"
+     width="0.5in" height="0.5in"
      viewBox="0 0 1024 1024" >
   <path 
         fill={this.props.fill} stroke="none"

@@ -101,7 +101,7 @@ class PokemonEvolution extends Component{
                 pokemonName={this.upperCaseFirst(this.state.evolChain[pokeId])} 
                 pokeId={this.pokemonNumtoThreeDigits(pokeId)}
                 textColor='white'/>
-            <TypeContainer onBottom pokemonId={pokeId}/>
+            <TypeContainer onBottom render="Types" pokemonId={pokeId}/>
             <FontAwesomeIcon style={{display: this.isLastPokemon(this.state.evolChain[pokeId], lastPokemonName )}} className={classes.Chevron} icon={faChevronDown}/> 
         </div>) : null;
 

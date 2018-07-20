@@ -144,7 +144,7 @@ class TypeContainer extends Component{
                 }
             }
             for(let type1Id of type1WeakAgainst){
-                //second part of if ensures that the same type is not added twice
+                //second part of if statement ensures that the same type is not added twice
                 if (type2StrongAgainst.includes(type1Id) === false && finalWeaknesses.includes(this.translateTypeId(type1Id)) === false){
                     finalWeaknesses.push(this.translateTypeId(type1Id));
                 }

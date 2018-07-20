@@ -65,6 +65,7 @@ class PokemonPhysical extends Component{
                         <h4 style={{color:'white'}}>Gender</h4>
                         <div> 
                             {this.props.genderRate !== '8' ? <FontAwesomeIcon icon={faMars} /> : null}
+                            {'                                                                       '}
                             {this.props.genderRate !== '0' ? <FontAwesomeIcon icon={faVenus} /> : null}
                         </div>
                     </div>

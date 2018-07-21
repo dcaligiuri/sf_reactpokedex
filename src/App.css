@@ -8,6 +8,11 @@
 }
 
 
+.PokemonName {
+    text-align: center;
+}
+
+
 
 .Btn:active {
     background: #00ccff;
@@ -63,5 +68,10 @@
     .Chevron {
         margin-top: 10px;
     }
+
+    .PokemonName {
+        margin-bottom: 25px;
+    }
+    
 
  }

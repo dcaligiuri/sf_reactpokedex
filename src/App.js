@@ -44,13 +44,6 @@ class App extends Component {
       return false; 
   }
 
-  
-  handleKeyPress = (event) => {
-    if(event.key == 'Enter'){
-      console.log('enter press here! ')
-    }
-  }
-
 
   getPrevIdNumber(currPokeId){
     if (currPokeId === 1)
@@ -204,7 +197,7 @@ class App extends Component {
      
     const isMobile = this.isMobile();
 
-    let pokemonName = this.state.pokemonName ? <h2 style={{textAlign: 'center'}}>{this.upperCaseFirst(this.state.pokemonName) + " #" + this.state.pokemonPaddedId }</h2> : null;
+    let pokemonName = this.state.pokemonName ? <h2 className={classes.PokemonName}>{this.upperCaseFirst(this.state.pokemonName) + " #" + this.state.pokemonPaddedId }</h2> : null;
 
 
     if (isMobile) {

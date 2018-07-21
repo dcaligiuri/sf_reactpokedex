@@ -5,11 +5,11 @@ const app = express();
 
 
 
-var MongoClient = require('mongodb').MongoClient
-  , assert = require('assert');
-
+//var MongoClient = require('mongodb').MongoClient
+ // , assert = require('assert');
+//
 // Connection URL
-var url = 'mongodb://heroku_0x82c341:9pbl84dbi9lanl7edeupmo261u@ds147011.mlab.com:47011/heroku_0x82c341';
+//var url = 'mongodb://heroku_0x82c341:9pbl84dbi9lanl7edeupmo261u@ds147011.mlab.com:47011/heroku_0x82c341';
 
 // Use connect method to connect to the server
 
@@ -23,18 +23,20 @@ var url = 'mongodb://heroku_0x82c341:9pbl84dbi9lanl7edeupmo261u@ds147011.mlab.co
 const port = process.env.PORT || 5000;
 // API calls
 
-app.get('/api/hello', (req, res) => {
+app.use('/api/hello', (req, res) => {
 
-    MongoClient.connect(url, (err, client) => {
+    console.log("ACCECSS");
+
+    //MongoClient.connect(url, (err, client) => {
         // Client returned
-        var db = client.db('heroku_0x82c341');
+     //   var db = client.db('heroku_0x82c341');
       
-          db.collection('pokemon').findOne({id: '1'}, function (findErr, result) {
-              if (findErr) throw findErr;
-              res.send({ pokemon: result });
-              client.close();
-          });
-      });
+    //      db.collection('pokemon').findOne({id: '1'}, function (findErr, result) {
+    //          if (findErr) throw findErr;
+    //          res.send({ pokemon: result });
+     //         client.close();
+     //     });
+    //  });
       
   });
   

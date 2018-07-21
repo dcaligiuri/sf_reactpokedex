@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import PokemonPhysical from './components/PokemonPhysical/PokemonPhysical';
 import PokemonEvolution from './components/PokemonEvolution/PokemonEvolution';
 import PokemonStats from './components/PokemonStats/PokemonStats';
 import PokedexDescription from './containers/PokedexDescription/PokedexDescription';
-//import PokemonGenders from './components/PokemonGenders/PokemonGenders';
 import TypeContainer from './containers/TypeContainer/TypeContainer';
 import PokemonProPic from './components/PokemonProPic/PokemonProPic';
 import classes from './App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronCircleRight, faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons';
-import Button from './components/UI/Button/Button';
-import PokemonName from './components/PokemonEvolution/PokemonName/PokemonName';
 import pokemonArr from './csv/pokemon';
 import pokemonSpeciesArr from './csv/pokemonSpecies';
 import { Grid, Row, Col } from 'react-bootstrap';
@@ -98,11 +94,12 @@ class App extends Component {
 
   nextPokemonHandler = (pokemonId) => {
     this.setState({loading: true});
+
     let nextPokemonId = pokemonId + 1;
     //next for Blacephalon is Bulbasaur
     if (pokemonId === 802){
       nextPokemonId = 1;
-  }
+    }
 
     const pokemonPaddedId = this.pokemonNumtoThreeDigits(nextPokemonId);
     const pokemonName = pokemonArr[nextPokemonId - 1].identifier;
@@ -110,12 +107,10 @@ class App extends Component {
     const pokemonWeight = Number(pokemonArr[nextPokemonId - 1].weight) / 10.0;
     const pokemonGenderRate = this.getGenderRate(nextPokemonId);
 
-
     const newPrevPokemonId = this.getPrevIdNumber(nextPokemonId);
     const newNextPokemonId = this.getNextIdNumber(nextPokemonId);
     const newPrevPokemonName = pokemonArr[newPrevPokemonId - 1].identifier;
     const newNextPokemonName = pokemonArr[newNextPokemonId - 1].identifier;
-
 
     this.setState({pokemonId: nextPokemonId});
     this.setState({pokemonName: pokemonName});
@@ -148,7 +143,6 @@ class App extends Component {
     const newPrevPokemonName = pokemonArr[newPrevPokemonId - 1].identifier;
     const newNextPokemonName = pokemonArr[newNextPokemonId - 1].identifier;
 
-  
     this.setState({pokemonId: prevPokemonId});
     this.setState({pokemonName: pokemonName});
     this.setState({pokemonPaddedId: pokemonPaddedId});
@@ -163,7 +157,7 @@ class App extends Component {
 
 
   componentWillMount(){
-
+    let start =  Date.now();
     const pokemonPaddedId = this.pokemonNumtoThreeDigits(this.state.pokemonId);
     const pokemonName = pokemonArr[this.state.pokemonId - 1].identifier;
     const pokemonHeight = Number(pokemonArr[this.state.pokemonId - 1].height) / 10.0;
@@ -174,7 +168,6 @@ class App extends Component {
     const nextPokemonName = pokemonArr[nextPokemonId - 1].identifier;
     const prevPokemonName = pokemonArr[prevPokemonId - 1].identifier;
 
-    
     this.setState({pokemonName: pokemonName});
     this.setState({pokemonPaddedId: pokemonPaddedId});
     this.setState({pokemonHeight: pokemonHeight});
@@ -182,14 +175,11 @@ class App extends Component {
     this.setState({pokemonGenderRate: pokemonGenderRate});
     this.setState({nextPokemonName: nextPokemonName});
     this.setState({prevPokemonName: prevPokemonName});
-
-
-    //this.setState({pokemonAbilities: res.data.abilities});
     
     this.setState({loading: false});
-
-    
-      
+    let finish = Date.now();
+    console.log(start);
+    console.log(finish);
   }
 
 
@@ -198,7 +188,6 @@ class App extends Component {
     const isMobile = this.isMobile();
 
     let pokemonName = this.state.pokemonName ? <h2 className={classes.PokemonName}>{this.upperCaseFirst(this.state.pokemonName) + " #" + this.state.pokemonPaddedId }</h2> : null;
-
 
     if (isMobile) {
       return (
@@ -294,43 +283,43 @@ class App extends Component {
             
             </Col>
           </Row>
-           <Row className="show-grid">
+          <Row className="show-grid">
             <Col lg={4} lgOffset={2}>
-            <PokemonProPic 
-            style={{width: '50%'}}
-          loading={this.state.loading} 
-          pokemonPaddedId={this.state.pokemonPaddedId} 
-          pokemonName={this.state.pokemonName}/>
-          <PokemonStats 
-          pokemonName={this.upperCaseFirst(this.state.pokemonName)} 
-          pokemonId={this.state.pokemonId} />
+              <PokemonProPic 
+                style={{width: '50%'}}
+                loading={this.state.loading} 
+                pokemonPaddedId={this.state.pokemonPaddedId} 
+                pokemonName={this.state.pokemonName}/>
+              <PokemonStats 
+                pokemonName={this.upperCaseFirst(this.state.pokemonName)} 
+                pokemonId={this.state.pokemonId} />
             </Col>
             <Col lg={4}>
-            <PokedexDescription 
-          pokemonId={this.state.pokemonId}/> 
-            {this.state.pokemonId ? <PokemonPhysical 
-          height={this.state.pokemonHeight} 
-          weight={this.state.pokemonWeight}
-          genderRate={this.state.pokemonGenderRate}
-          pokemonId={this.state.pokemonId}/> : null}
-          <TypeContainer 
-            loading={this.state.loading} 
-            pokemonId={this.state.pokemonId}
-            pokemonTypes={this.state.pokemonTypes}
-            render="Types"/>
-           <TypeContainer 
-            loading={this.state.loading} 
-            pokemonId={this.state.pokemonId}
-            pokemonTypes={this.state.pokemonTypes}
-            render="Weak Against"/>
-          </Col>
+              <PokedexDescription 
+                pokemonId={this.state.pokemonId}/> 
+                {this.state.pokemonId ? <PokemonPhysical 
+                  height={this.state.pokemonHeight} 
+                  weight={this.state.pokemonWeight}
+                  genderRate={this.state.pokemonGenderRate}
+                  pokemonId={this.state.pokemonId}/> : null}
+              <TypeContainer 
+                loading={this.state.loading} 
+                pokemonId={this.state.pokemonId}
+                pokemonTypes={this.state.pokemonTypes}
+                render="Types"/>
+              <TypeContainer 
+                loading={this.state.loading} 
+                pokemonId={this.state.pokemonId}
+                pokemonTypes={this.state.pokemonTypes}
+                render="Weak Against"/>
+            </Col>
           </Row>
           <Row className="show-grid">
             <Col lg={8} lgOffset={2}>
-            <PokemonEvolution 
-          pokemonSprite={this.state.pokemonSprite} 
-          pokemonName={this.state.pokemonName}
-          pokemonId={this.state.pokemonId}/>
+              <PokemonEvolution 
+                pokemonSprite={this.state.pokemonSprite} 
+                pokemonName={this.state.pokemonName}
+                pokemonId={this.state.pokemonId}/>
             </Col>
           </Row>
         </Grid>

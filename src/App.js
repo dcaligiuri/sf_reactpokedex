@@ -31,6 +31,23 @@ class App extends Component {
     loading: true
   };
 
+  handleKeyDown  = (event) => {
+    switch( event.keyCode ) {
+        //left key
+        case 37:
+          event.preventDefault();
+          this.prevPokemonHandler(this.state.pokemonId);
+          break;
+        //right key
+        case 39:
+          event.preventDefault();
+          this.nextPokemonHandler(this.state.pokemonId);
+          break;
+        default: 
+            break;
+    }
+  }
+  
 
   isMobile(){
     if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
@@ -157,7 +174,7 @@ class App extends Component {
 
 
   componentWillMount(){
-    let start =  Date.now();
+    document.addEventListener("keydown", this.handleKeyDown.bind(this));
     const pokemonPaddedId = this.pokemonNumtoThreeDigits(this.state.pokemonId);
     const pokemonName = pokemonArr[this.state.pokemonId - 1].identifier;
     const pokemonHeight = Number(pokemonArr[this.state.pokemonId - 1].height) / 10.0;
@@ -177,9 +194,6 @@ class App extends Component {
     this.setState({prevPokemonName: prevPokemonName});
     
     this.setState({loading: false});
-    let finish = Date.now();
-    console.log(start);
-    console.log(finish);
   }
 
 

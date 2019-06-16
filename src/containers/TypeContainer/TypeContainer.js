@@ -178,10 +178,7 @@ class TypeContainer extends Component{
         else if(this.props.render === "Types"){
             this.setState({currPokemonTypes: currPokemonTypes});
         }
-        //let currPokemonWeaknesses = this.getWeaknesses(currPokemonTypesId);
-        //this.setState({currPokemonWeaknesses: currPokemonWeaknesses});
-
-        
+    
     }
 
     findBottomStyling(){
@@ -189,7 +186,7 @@ class TypeContainer extends Component{
         let bottomStyling = null;
         if (this.props.onBottom){
             if (this.state.currPokemonTypes.length === 2 ){
-                bottomStyling = {marginLeft: '25%'};
+                bottomStyling = {marginLeft: '26%'};
             }
             else if (this.state.currPokemonTypes.length === 1){
                 bottomStyling = {marginLeft: '38%'};

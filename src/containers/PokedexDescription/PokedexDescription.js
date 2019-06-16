@@ -25,8 +25,6 @@ class PokedexDescription extends Component{
         return (
             <div onChange={this.handleChange}>
                 <PokemonDescription pokemonId={this.props.pokemonId}/>
-                {/*}<PokemonDescription activeVersion={this.state.version} pokemonId={this.props.pokemonId}/>{*/}
-                {/*{this.props.isMobile ? null : <PokemonVersion onChangeVersion={this.versionChangeHandler}/>}{*/}
             </div>
         )
     }

@@ -33,12 +33,12 @@ class App extends Component {
 
   handleKeyDown  = (event) => {
     switch( event.keyCode ) {
-        //left key
+        //left arrow key
         case 37:
           event.preventDefault();
           this.prevPokemonHandler(this.state.pokemonId);
           break;
-        //right key
+        //right arrow key
         case 39:
           event.preventDefault();
           this.nextPokemonHandler(this.state.pokemonId);
